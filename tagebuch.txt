@@ -1,0 +1,32 @@
+8.2.24
+- grundlagen (main, button class, usw)
+- screen manager
+- start menu
+- angefangen mit den einstellungen, taskleiste farbe
+- text support
+
+9.2.24
+- taskleistenfarbe kann jetzt in Einstellungen geaendert werden
+- buttons koennen jetzt bilder akzeptieren
+
+11.2.24
+- Knoepfe koennen jetzt 2 bilder akzeptieren, eins fuer normal eins fuer hover
+
+12.2.24
+- flappybird als erstes spiel implementiert
+- erstes icon auf desktop
+- desktop kann jetzt screen wechseln
+- flappybird noch buggy, pipe detection muss noch gefixt werden
+- flappybird jetzt gefixt
+
+14.2.24
+- taskbar zeigt jetzt laufende programme
+
+18.2.24
+- minesweeper hinzugefuegt
+- art fuer programme
+- taskbar programme gefixt
+- oh gott so viel
+- code big messy
+- ganz viele todos vorbereitet
+- momentane zeilen: 747 (ohne todos)
