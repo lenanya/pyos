@@ -30,3 +30,6 @@
 - code big messy
 - ganz viele todos vorbereitet
 - momentane zeilen: 747 (ohne todos)
+
+21.2.24
+- git repo erstellt
