@@ -199,6 +199,19 @@ while running:
                                         taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
                                 taskbar.taskbar_buttons_running_tasks.pop(i)
                     current_screen = "desktop"
+                    
+            elif current_screen == "explorer":
+                if screens["explorer"].click_check(event.pos) == "exit":
+                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
+                        if i < len(taskbar.taskbar_running_tasks):
+                            if type(taskbar.taskbar_running_tasks[i]) == explorer.Explorer:
+                                taskbar.taskbar_running_tasks.pop(i)
+                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
+                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
+                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
+                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
+                                taskbar.taskbar_buttons_running_tasks.pop(i)
+                    current_screen = "desktop"
 
         # Alle events der Liste hinzufuegen
         events.append(event)
