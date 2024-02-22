@@ -63,7 +63,7 @@ class Taskbar():
         self.taskbar_running_tasks = []
         self.taskbar_buttons_running_tasks = []
 
-    # Funktion um Taskleiste anzuzeigen yes
+    # Funktion um Taskleiste anzuzeigen
     def draw(self):
         with open("./settings/taskbarcolor.txt", "r") as f:
             read_color = f.read()
