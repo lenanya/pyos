@@ -26,8 +26,14 @@ class Minesweeper():
         self.list_of_clears = []
         self.game_over = True
         self.start_game_button = button.Button(640 * self.scale_horizontal, 390 * self.scale_vertical, 640 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, screen, "Start new game", self.font)
-    
+        self.mines_left = 0
+        self.mines_left_text = str(self.mines_left)
+        self.mines_left_text_render = self.font.render(self.mines_left_text, 1, WHITE)
+
+
     def start_new_game(self):
+        self.mines_left = 0
+        self.mines_left_text = self.mines_left
         self.playfield = []
         for x in range(9):
             self.playfield.append([])
@@ -39,7 +45,8 @@ class Minesweeper():
             self.mines.append([randint(0, 8), randint(0, 8)])
         for i in self.mines:
             self.playfield[i[0]][i[1]] = "X"
-            
+            self.mines_left += 1
+
         self.adjacencies = self.playfield
         for x in range(9):
             for y in range(9):
@@ -128,6 +135,7 @@ class Minesweeper():
         
         self.list_of_mines = []
         self.list_of_clears = []
+        self.mines_left_text = str(self.mines_left)
         for y in range(1, 10):
             for x in range(1, 10):
                 if self.adjacencies[y-1][x-1] == "X":
@@ -164,26 +172,43 @@ class Minesweeper():
                             if i.color != TEAL and i.color != RED:
                                 i.color = RED
                                 i.text_color = RED
+                                self.mines_left -= 1
+                                self.mines_left_text = str(self.mines_left)
                             elif i.color == RED:
                                 i.color = WHITE
                                 i.text_color = WHITE
+                                self.mines_left += 1
+                                self.mines_left_text = str(self.mines_left)
                     for i in self.list_of_mines:
                         if i.is_pressed(event.pos):
                             if i.color != RED:
                                 i.color = RED
                                 i.text_color = RED
+                                self.mines_left -= 1
+                                self.mines_left_text = str(self.mines_left)
                             else:
                                 i.color = WHITE
                                 i.text_color = WHITE
+                                self.mines_left += 1
+                                self.mines_left_text = str(self.mines_left)
             
     
     def draw(self):
         pygame.draw.rect(self.screen, BLACK, (0, 100 * self.scale_vertical, 1920 * self.scale_horizontal, 980 * self.scale_vertical))
         if not self.game_over:
+            self.mines_left_text_render = self.font.render(f"Minen: {self.mines_left_text}", 1, WHITE)
+            self.screen.blit(self.mines_left_text_render, (10 * self.scale_horizontal, 200 * self.scale_vertical))
+            mines_cleared = 0
             for i in self.list_of_clears:
                 i.draw()
             for i in self.list_of_mines:
                 i.draw()
+                if i.color == RED:
+                    mines_cleared += 1
+
+            if mines_cleared == 20:
+                self.game_over = True
+                
         else:
             self.start_game_button.draw()
         self.button_exit.draw()
