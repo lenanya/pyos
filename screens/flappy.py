@@ -20,8 +20,8 @@ class Player():
 		self.screen = screen
 		self.scale_horizontal = scale_horizontal
 		self.scale_vertical = scale_vertical
-		self.velocity = 5 * self.scale_vertical
 		self.speed = 0
+		self.velocity = 5 * self.scale_vertical
 		
 	def draw(self):
 		pygame.draw.rect(self.screen, YELLOW, (200 * self.scale_horizontal, self.y, self.size_horizontal, self.size_vertical))
@@ -73,7 +73,7 @@ class FlappyBird():
         self.player = Player(490 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, self.screen, self.scale_horizontal, self.scale_vertical)
         self.pipe = Pipe(1920 * self.scale_horizontal, 300 * self.scale_vertical, 400 * self.scale_vertical, self.screen, self.scale_horizontal, self.scale_vertical)
         self.game_over = True
-        self.button_exit = button.Button((1920 - 55) * scale_horizontal, 100 * scale_vertical, 50 * scale_horizontal, 50 * scale_vertical, RED, screen, "X", self.font)
+        self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * scale_vertical, 50 * scale_horizontal, 50 * scale_vertical, RED, screen, "X", self.font)
         self.player_score = 0
         
     def run(self, mouse_position, events):

@@ -18,7 +18,7 @@ class Minesweeper():
         self.scale_vertical = scale_vertical
         self.screen = screen
         self.font = font
-        self.button_exit = button.Button((1920 - 55) * scale_horizontal, 100 * scale_vertical, 50 * scale_horizontal, 50 * scale_vertical, RED, screen, "X", self.font)
+        self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * scale_vertical, 50 * scale_horizontal, 50 * scale_vertical, RED, screen, "X", self.font)
         self.playfield = []
         self.mines = []
         self.adjacencies = []

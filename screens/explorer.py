@@ -17,7 +17,7 @@ class Explorer():
         self.screen = screen
         self.font = font
 
-        self.button_exit = button.Button((1920 - 55) * self.scale_horizontal, 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
+        self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 
     def run(self, mouse_position, events):
         pass

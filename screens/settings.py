@@ -27,7 +27,7 @@ class Settings():
         self.button_taskbar_white = button.Button(55 * self.scale_horizontal, 455 * self.scale_vertical, 390 * self.scale_horizontal, 90 * self.scale_vertical, BLUE, self.screen, "Weiß", self.font)
                 
         
-        self.button_exit = button.Button((1920 - 55) * self.scale_horizontal, 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
+        self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 		
 		
 		
