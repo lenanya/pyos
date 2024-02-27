@@ -8,18 +8,21 @@ b bname = 0xff
 
 -- comment
 
-fn fname(){
+fn fname () {
+print ( intname )
+return fname
+}
+
+if ( intname == 24 ) {
+print ( strname )
+}
+
+while ( intname != 4 ) {
 
 }
 
-if (intname==4){
+fname
 
-}
+intname += 1
 
-while (intname!=4){
-
-}
-
-fname()
-
-
+fname
