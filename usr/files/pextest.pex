@@ -1,0 +1,25 @@
+term
+
+int intname = 24
+flt fltname = 4.3
+str strname = "blob"
+ch chname = 'a'
+b bname = 0xff
+
+-- comment
+
+fn fname(){
+
+}
+
+if (intname==4){
+
+}
+
+while (intname!=4){
+
+}
+
+fname()
+
+

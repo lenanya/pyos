@@ -1,4 +1,5 @@
 import pygame
+import os
 from utils import button
 
 # Farben
@@ -19,8 +20,23 @@ class Explorer():
 
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 
+        self.current_folder = "./usr/files/"
+        self.dirs = []
+        self.files = []
+        self.buttons = []
+
+        for i in os.listdir(self.current_folder):
+            if os.path.isfile(self.current_folder+ i):
+                self.files.append(i)
+            else:
+                self.dirs.append(i)
+
+        print(self.dirs)
+        print(self.files)
+
     def run(self, mouse_position, events):
-        pass
+        for i in self.dirs:
+            self.buttons.append(button.Button((200 )))
 
     def draw(self):
         pygame.draw.rect(self.screen, GREY, (0, 100 * self.scale_vertical, 1920 * self.scale_horizontal, 980 * self.scale_vertical))
