@@ -35,7 +35,7 @@ class Terminal:
             self.lines[self.curr_line + 1] = cmd[4::]
             self.curr_line += 1
         elif terms_cmd[0] == "pex":
-            if terms_cmd[1] in os.listdir(self.current_folder):
+            if terms_cmd[1] in os.listdir(self.current_folder): # TODO: bugfix if no file
                 self.pex = pex.Pex(terms_cmd[1])
                 self.pex_active = True
         elif terms_cmd[0] == "pexexit":

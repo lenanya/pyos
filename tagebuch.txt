@@ -44,3 +44,4 @@
 - explorer wird evtl doch nicht passieren
 - bugfixes
 - allen code kommentiert, vieles aufgeraeumt
+- weitere planung, durch todos

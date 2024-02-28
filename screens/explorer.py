@@ -42,3 +42,5 @@ class Explorer():
     def click_check(self, event_pos):
         if self.button_exit.is_pressed(event_pos):
             return "exit"
+
+# TODO: actually make it lmao

@@ -139,3 +139,7 @@ class Pex:
         
     # TODO: ADD MORE KEYWORDS
     # TODO: ????GRAPHICAL MODE
+    # TODO: add function working (oops)
+    # TODO: add other comperative ops
+    # TODO: add more math ops
+    # TODO: string concat?
