@@ -3,6 +3,7 @@ import pygame
 from utils import button
 from screens import desktop, settings, flappy, minesweeper, explorer, terminal
 
+# pygame initialisieren
 pygame.init()
 
 # Timer 
@@ -16,6 +17,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREY = (145, 145, 145)
 TEAL = (0, 145, 255)
+# dictionary fuer farben, benoetigt fuer taskleiste
 colors = {"RED": (255, 0, 0),
     "GREEN": (0, 255, 0),
     "BLUE": (0, 0, 255),
@@ -25,20 +27,23 @@ colors = {"RED": (255, 0, 0),
     "TEAL": (0, 145, 255)}
 
 # Bildschirmdaten
-screen_width = pygame.display.Info().current_w
-screen_height = pygame.display.Info().current_h
-scale_horizontal = screen_width / 1920
+screen_width = pygame.display.Info().current_w # bildschirmbreite
+screen_height = pygame.display.Info().current_h # bildschirmhoehe
+
+# verhaeltnis zu standard bildschirm um alles zu skalieren
+scale_horizontal = screen_width / 1920 
 scale_vertical = screen_height / 1080
+
 framerate = 60
 
 # Font
-font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical)))
+font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical))) # auch auf hoehe skaliert
 
 # Bildschirmflaeche erstellen
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 pygame.display.set_caption("PyOS")
 
-# Dictionary von Fenstern
+# Dictionary von Fenstern um wechseln zu vereinfachen
 screens = {}
 screens["desktop"] = desktop.Desktop(scale_horizontal, scale_vertical, screen, font)
 screens["settings"] = settings.Settings(scale_horizontal, scale_vertical, screen, font)
@@ -48,46 +53,67 @@ screens["explorer"] = explorer.Explorer(scale_horizontal, scale_vertical, screen
 screens["terminal"] = terminal.Terminal(scale_horizontal, scale_vertical, screen, font)
 
 
-# Variable zum wechseln von Fenstern
+# Variable zum Wechseln von Fenstern
 current_screen = "desktop"
 
 # Taskleiste erstellen
 class Taskbar():
     def __init__(self):
+        # Home button
         self.taskbar_button_home = button.Button(0,0,100 * scale_horizontal, 100 * scale_vertical, WHITE, screen, "", font, "./assets/home.png", "./assets/home_hover.png")
-        self.show_home = False
-        with open("./settings/taskbarcolor.txt", "r") as f:
-            read_color = f.read()
-        self.taskbar_color = colors[read_color]
+        self.show_home = False # Variable ob das home menue angezeigt wird
+        
+        # Taskbar Farbe aus Einstellungen lesen
+        with open("./settings/taskbarcolor.txt", "r") as f: # datei im lesemodus oeffnen
+            read_color = f.read() # farbe auslesen
+        self.taskbar_color = colors[read_color] # hier kommt das dictionary von vorhin zu gebrauch
+        
+        # Home Menue mit knoepfen erstellen, hitbox ist um
+        # das menue auszublenden wenn ausserhalb von dem menu gedrueckt wird
         self.home_hitbox = pygame.Rect((0,0, 400 * scale_horizontal, 605 * scale_vertical))
         self.home_button_desktop = button.Button(5 * scale_horizontal, 5 * scale_vertical, 390 * scale_horizontal, 45 * scale_vertical, BLUE, screen, "Desktop", font)
         self.home_button_settings = button.Button(5 * scale_horizontal, 55 * scale_vertical, 390 * scale_horizontal, 45 * scale_vertical, BLUE, screen, "Einstellungen", font)
         self.home_button_shutdown = button.Button(5 * scale_horizontal, 555 * scale_vertical, 390 * scale_horizontal, 45 * scale_vertical, BLUE, screen, "Herunterfahren", font)
+        
+        # Listen um offene Apps zu merken und buttons fuer sie zu erstellen
         self.taskbar_running_tasks = []
         self.taskbar_buttons_running_tasks = []
 
     # Funktion um Taskleiste anzuzeigen
     def draw(self):
+        # Taskbar Farbe aus Einstellungen lesen
         with open("./settings/taskbarcolor.txt", "r") as f:
             read_color = f.read()
         self.taskbar_color = colors[read_color]
+        
+        # Taskleiste anzeigen
         pygame.draw.rect(screen, self.taskbar_color, (0,0, screen_width, 100 * scale_vertical))
+        
+        # Home button anzeigen
         self.taskbar_button_home.draw()
+        
+        # Home Menue anzeigen falls noetig
         if self.show_home:
+            # hintergrund vom home menue
             pygame.draw.rect(screen, WHITE, (0,0, 400 * scale_horizontal, 605 * scale_vertical))
+            # buttons im home menue anzeigen
             self.home_button_settings.draw()
             self.home_button_desktop.draw()
             self.home_button_shutdown.draw()
+        
+        # offene apps auf taskleiste anzeigen, falls home menue nicht angezeigt
         if not self.show_home:
-            for i in self.taskbar_buttons_running_tasks:
-                i.draw()
+            for i in self.taskbar_buttons_running_tasks: # durch offene apps iterieren
+                i.draw() # buttons anzeigen
 
     # Funktionen der Taskleiste
     def run(self, mouse_position):
-        if self.taskbar_button_home.is_hover(mouse_position):
-            self.taskbar_button_home.sprite = self.taskbar_button_home.image_on_hover
-        else:
-            self.taskbar_button_home.sprite = self.taskbar_button_home.image
+        # sprites / farbe von buttons in taskleiste / home menue zu hover / hellblau
+        # aender falls die maus ueber ihnen ist
+        if self.taskbar_button_home.is_hover(mouse_position): # falls maus auf knopf :
+            self.taskbar_button_home.sprite = self.taskbar_button_home.image_on_hover # bild wird zu hover version geaendert
+        else:                                                 # sonst:
+            self.taskbar_button_home.sprite = self.taskbar_button_home.image # bild wird zu dem normalen gewechselt
 
         if self.home_button_desktop.is_hover(mouse_position):
             self.home_button_desktop.color = TEAL
@@ -104,14 +130,19 @@ class Taskbar():
         else:
             self.home_button_shutdown.color = BLUE
 
+        
+        # dasselbe fuer offene apps, falls kein home menue angezeigt wird
         if not self.show_home:
-            for i in self.taskbar_buttons_running_tasks:
-                if i.is_hover(mouse_position):
-                    i.sprite = i.image_on_hover
-                else:
-                    i.sprite = i.image
+            for i in self.taskbar_buttons_running_tasks: # durch liste iterieren
+                if i.is_hover(mouse_position): # dasselbe wie beim home menue
+                    i.sprite = i.image_on_hover # "
+                else:                          # "
+                    i.sprite = i.image          # "
 
-    def click_check(self, event_pos):
+    # funktion um zu ueberpruefen ob buttons gedrueckt sind
+    def click_check(self, event_pos): # erhaelt event position von hauptschleife
+        # home menue buttons ueberpruefen, und das jeweilige fenster an
+        # die hauptschleife returnen, um das fenster zu wechseln
         if self.show_home:
             if self.home_button_settings.is_pressed(event_pos):
                 return "settings"
@@ -120,28 +151,30 @@ class Taskbar():
             elif self.home_button_shutdown.is_pressed(event_pos):
                 return "shutdown"
         
+        # offene apps buttons ueberpruefen,
         if not self.show_home:
-            for i in self.taskbar_buttons_running_tasks:
-                if i.is_pressed(event_pos):
-                    return i.text
+            for i in self.taskbar_buttons_running_tasks: # durch tasks iterieren
+                if i.is_pressed(event_pos): # falls knopf gedrueckt:
+                    return i.text # returned den text des buttons, also
+                                  # den namen der app/des fensters
 
+        # home menue button ueberpruefen
         if self.taskbar_button_home.is_pressed(event_pos):
             self.show_home = True
-        if not self.home_hitbox.collidepoint(event_pos):
+        if not self.home_hitbox.collidepoint(event_pos): # falls ausserhalb von home menue gedrueckt wird
             self.show_home = False
-        return None
+        return None # falls keiner der buttons gedrueckt ist
         
 
-taskbar = Taskbar()
+taskbar = Taskbar() # taskbar klassen objekt erstellen
 
-running = True
+running = True # variable die bestimmt ob das "OS" an ist
 
 # Hauptschleife
 while running:
 
     # Maus Position updaten
     mouse_position = pygame.mouse.get_pos()
-
     
     # Liste von events erstellen um sie an Classes weitergeben zu koennen
     events = []
@@ -152,115 +185,73 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        # ueberpruefen ob geklickt wird
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            change = taskbar.click_check(event.pos)
+            change = taskbar.click_check(event.pos) # ueberpruefen ob eins der offenen programme
+                                                    # auf der taskleiste geklickt wurde
             if change == "shutdown":
                 running = False
-                break
-            if change != None and change in screens.keys():
-                current_screen = change
+                break # break -> hauptschleife abbrechen 
+            if change != None and change in screens.keys(): 
+                current_screen = change # momentaner bildschirm wird aktualisiert
                 
-            if current_screen == "desktop":
-                current_screen= screens["desktop"].click_check(event.pos)
+            if current_screen == "desktop": # falls auf dem desktop: 
+                current_screen = screens["desktop"].click_check(event.pos) # ueberpruefen ob
+                                                                           # auf dem desktop etwas geklick wurde
 
-            elif current_screen == "flappy":
-                if screens["flappy"].click_check(event.pos) == "exit":
-                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
-                        if i < len(taskbar.taskbar_running_tasks):
-                            if type(taskbar.taskbar_running_tasks[i]) == flappy.FlappyBird:
-                                taskbar.taskbar_running_tasks.pop(i)
-                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
-                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
-                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
-                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
-                                taskbar.taskbar_buttons_running_tasks.pop(i)
-                    current_screen = "desktop"
-
-            elif current_screen == "settings":
-                if screens["settings"].click_check(event.pos) == "exit":
-                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
-                        if i < len(taskbar.taskbar_running_tasks):
-                            if type(taskbar.taskbar_running_tasks[i]) == settings.Settings:
-                                taskbar.taskbar_running_tasks.pop(i)
-                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
-                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
-                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
-                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
-                                taskbar.taskbar_buttons_running_tasks.pop(i)
-                    current_screen = "desktop"
-            
-            elif current_screen == "minesweeper":
-                if screens["minesweeper"].click_check(event.pos) == "exit":
-                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
-                        if i < len(taskbar.taskbar_running_tasks):
-                            if type(taskbar.taskbar_running_tasks[i]) == minesweeper.Minesweeper:
-                                taskbar.taskbar_running_tasks.pop(i)
-                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
-                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
-                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
-                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
-                                taskbar.taskbar_buttons_running_tasks.pop(i)
-                    current_screen = "desktop"
+            # ueberpruefen ob in dem momentan offenen fenster der button zum schliessen
+            # gedrueckt wurde und falls dem so ist, dieses schliessen und aus den
+            # listen der offenen apps entfernen
+            for i in screens.keys():
+                
+                if i == current_screen:
                     
-            elif current_screen == "explorer":
-                if screens["explorer"].click_check(event.pos) == "exit":
-                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
-                        if i < len(taskbar.taskbar_running_tasks):
-                            if type(taskbar.taskbar_running_tasks[i]) == explorer.Explorer:
-                                taskbar.taskbar_running_tasks.pop(i)
-                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
-                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
-                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
-                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
-                                taskbar.taskbar_buttons_running_tasks.pop(i)
-                    current_screen = "desktop"
-
-            elif current_screen == "terminal":
-                if screens["terminal"].click_check(event.pos) == "exit":
-                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
-                        if i < len(taskbar.taskbar_running_tasks):
-                            if type(taskbar.taskbar_running_tasks[i]) == terminal.Terminal:
-                                taskbar.taskbar_running_tasks.pop(i)
-                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
-                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
-                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
-                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
-                                taskbar.taskbar_buttons_running_tasks.pop(i)
-                    current_screen = "desktop"
-            
+                    for a in range(len(taskbar.taskbar_buttons_running_tasks)): # durch taskleiste iterieren
+                        
+                        if screens[current_screen].click_check(event.pos) == "exit": # falls exit knopf gedrueckt
+                            
+                            if a < len(taskbar.taskbar_running_tasks):
+                                
+                                if type(taskbar.taskbar_running_tasks[a]) == type(screens[i]):
+                                    taskbar.taskbar_running_tasks.pop(a) # app aus liste entfernen
+                                    # andere apps und ihre buttons in der taskleiste nach vorne holen
+                                    
+                                    for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
+                                        
+                                        if a + e < len(taskbar.taskbar_buttons_running_tasks): # falls app nicht die letzte
+                                            
+                                            taskbar.taskbar_buttons_running_tasks[a + e].x -= 105 * scale_horizontal # knopf vorziehen
+                                            taskbar.taskbar_buttons_running_tasks[a + e].hitbox.x -= 105 * scale_horizontal # hitbox vom knopf vorziehen
+                                            
+                                    taskbar.taskbar_buttons_running_tasks.pop(a) # app aus liste von buttons entfernen
+                                    
+                            current_screen = "desktop" # app geschlossen, also => desktop
 
 
-        # Alle events der Liste hinzufuegen
-        events.append(event)
+        events.append(event) # Alle events der Liste hinzufuegen
         
+    current = screens[current_screen] # Variable die das momentane Fenster beinhaltet
     
-    # Variable die das momentane Fenster beinhaltet
-    current = screens[current_screen]
-    if current not in taskbar.taskbar_running_tasks and current_screen != "desktop":
-        taskbar.taskbar_running_tasks.append(current)
+    if current not in taskbar.taskbar_running_tasks and current_screen != "desktop": # um keine app doppelt zu haben
+        taskbar.taskbar_running_tasks.append(current) # app der liste hinzufuegen
+        # knopf fuer die app in die liste hinzufuegen
         taskbar.taskbar_buttons_running_tasks.append(button.Button(105 * len(taskbar.taskbar_running_tasks) * scale_horizontal, 0 * scale_vertical, 100 * scale_horizontal, 100 * scale_vertical, BLUE, screen, current_screen, font, f"./assets/{current_screen}.png", f"./assets/{current_screen}_hover.png"))
 
-    # Funktionen des Fensters ausfuehren
-    current.run(mouse_position, events)
+    current.run(mouse_position, events) # Funktionen des momentanen Fensters ausfuehren
 
-    # Funktionen der Taskleiste ausfuehren
-    taskbar.run(mouse_position)
+    taskbar.run(mouse_position) # Funktionen der Taskleiste ausfuehren
 
-    # Momentanes Fenster anzeigen
-    current.draw()
+    current.draw() # Momentanes Fenster anzeigen
     
-    # Taskleiste anzeigen
-    taskbar.draw()
+    taskbar.draw() # Taskleiste anzeigen
 
-    # Bildschirm updaten
-    pygame.display.flip()
+    pygame.display.flip() # Bildschirm updaten
 
-    # Framerate festlegen
-    clock.tick(framerate)
+    clock.tick(framerate) # Framerate festlegen
 
 # TODO: ADD TASKBAR RIGHT CLICK MENU
 # TODO: ADD TIME 
-# TODO: ADD PINNING TO TASKBAR
+# TODO: ?ADD PINNING TO TASKBAR
 # TODO: ?SHOW WIFI 
 # TODO: ADD FILE MANAGER
 # TODO: ADD TEXT EDITOR

@@ -25,7 +25,6 @@ class Terminal:
         self.usr_input = ""
         
         self.pex_active = False
-        self.exit = False
 
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 
@@ -49,8 +48,6 @@ class Terminal:
             self.lines.append("")
             self.lines.append("")
             self.lines.append("")
-        elif terms_cmd[0] == "exit":
-            self.exit = True
         
     def run(self, mouse_position, events):
         if self.pex_active:
@@ -86,7 +83,7 @@ class Terminal:
 
 
     def click_check(self, event_pos):
-        if self.button_exit.is_pressed(event_pos) or self.exit == True:
+        if self.button_exit.is_pressed(event_pos) :
             return "exit"
         
     # TODO: ADD MORE CMDS

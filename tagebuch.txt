@@ -43,3 +43,4 @@
 - eigene programmiersprache eingefuegt (noch nicht fertig)
 - explorer wird evtl doch nicht passieren
 - bugfixes
+- allen code kommentiert, vieles aufgeraeumt
