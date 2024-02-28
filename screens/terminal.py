@@ -88,3 +88,6 @@ class Terminal:
     def click_check(self, event_pos):
         if self.button_exit.is_pressed(event_pos) or self.exit == True:
             return "exit"
+        
+    # TODO: ADD MORE CMDS
+    # TODO: FIX EXIT CMD

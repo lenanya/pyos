@@ -48,5 +48,5 @@ class Button():
     def is_pressed(self, event_pos):
         return self.hitbox.collidepoint(event_pos)
     
-# TODO: FIX TEXT ALIGNMENT LMAO
+# TODO: FIX TEXT ALIGNMENT LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO
 # TODO: ADD TEXT ALIGNMENT SETTING 

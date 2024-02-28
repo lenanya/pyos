@@ -18,3 +18,5 @@ while number != 18 [
 print number
 number += 1
 ]
+
+TODO ADD MORE CMDS AND TEST
