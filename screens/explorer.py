@@ -44,4 +44,3 @@ class Explorer():
             return "exit"
 
 # TODO: actually make it lmao
-# TODO: actually no fuck it dont make it too much work unnecessary

@@ -97,4 +97,3 @@ class Terminal:
     # TODO: ADD SCROLLING (OOPS)
     # TODO: comment bruh
     # TODO: tree cmd
-    # TODO: stop writing todos in caps (why)

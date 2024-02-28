@@ -120,6 +120,7 @@ class FlappyBird():
     def draw(self):
         # hintergrund anzeigen
         pygame.draw.rect(self.screen, BLACK, (0, 150 * self.scale_vertical, 1920 * self.scale_horizontal, 1000 * self.scale_vertical))
+        pygame.draw.rect(self.screen, WHITE, (0, 100 * self.scale_vertical, 1920 * self.scale_horizontal, 50 * self.scale_vertical))
         self.button_exit.draw() # exit button anzeigen
         if not self.game_over: # falls spiel aktiv
             # score text anzeigen
@@ -147,4 +148,3 @@ class FlappyBird():
 # TODO: ADD ANIMATION 
 # TODO: ADD SCALING DIFFICULTY (SPEED)
 # TODO: add start screen / end screen
-# TODO: autodefenestrate rn

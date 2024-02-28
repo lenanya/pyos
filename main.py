@@ -202,7 +202,7 @@ while running:
             # ueberpruefen ob in dem momentan offenen fenster der button zum schliessen
             # gedrueckt wurde und falls dem so ist, dieses schliessen und aus den
             # listen der offenen apps entfernen
-            for i in screens.keys():
+            for i in screens.keys(): # TODO: fix bug where it doesnt close 
                 
                 if i == current_screen:
                     
@@ -210,7 +210,7 @@ while running:
                         
                         if screens[current_screen].click_check(event.pos) == "exit": # falls exit knopf gedrueckt
                             
-                            if a < len(taskbar.taskbar_running_tasks):
+                            if a <= len(taskbar.taskbar_running_tasks):
                                 
                                 if type(taskbar.taskbar_running_tasks[a]) == type(screens[i]):
                                     taskbar.taskbar_running_tasks.pop(a) # app aus liste entfernen
@@ -225,7 +225,7 @@ while running:
                                             
                                     taskbar.taskbar_buttons_running_tasks.pop(a) # app aus liste von buttons entfernen
                                     
-                        current_screen = "desktop" # app geschlossen, also => desktop
+                            current_screen = "desktop" # app geschlossen, also => desktop
 
 
         events.append(event) # Alle events der Liste hinzufuegen
@@ -257,5 +257,3 @@ while running:
 # TODO: ADD TEXT EDITOR
 # TODO: ?ADD TETRIS
 # TODO: ?ADD HTML RENDERER
-# TODO: stop adding more todos
-# TODO: ignore above todo

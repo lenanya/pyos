@@ -117,4 +117,3 @@ class Settings():
 # TODO: ADD TIME ZONE SETTING
 # TODO: ?ADD LANGUAGES (not happening lmao)
 # TODO: ADD TERMINAL BACKGROUND COLOR SETTING
-# TODO: fuck urself why so much work idiot debil
