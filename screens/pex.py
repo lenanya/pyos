@@ -1,7 +1,3 @@
-import pygame
-import os
-from utils import button
-
 # Farben
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -11,7 +7,7 @@ WHITE = (255, 255, 255)
 GREY = (145, 145, 145)
 TEAL = (0, 145, 255)
 
-# interpreter fuer pex, die eigene programmiersprache die mit pyOS enthalten ist
+# interpreter fuer pex (pyos executable), die eigene programmiersprache die mit pyOS enthalten ist
 
 class Pex:
     def __init__(self, file):
