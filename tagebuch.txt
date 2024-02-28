@@ -45,3 +45,4 @@
 - bugfixes
 - allen code kommentiert, vieles aufgeraeumt
 - weitere planung, durch todos
+- nervenzusammenbruch weil zu viele todos ups
