@@ -1,28 +1,20 @@
-term
+num number = 12
 
-int intname = 24
-flt fltname = 4.3
-str strname = "blob"
-ch chname = 'a'
-b bname = 0xff
+print number
 
--- comment
+number += 2
 
-fn fname () {
-print ( intname )
-return fname
+print number
+
+if number != 12 {
+print no
 }
 
-if ( intname == 24 ) {
-print ( strname )
+if number == 14 {
+print yes
 }
 
-while ( intname != 4 ) {
-
-}
-
-fname
-
-intname += 1
-
-fname
+while number != 18 [
+print number
+number += 1
+]

@@ -31,9 +31,6 @@ class Explorer():
             else:
                 self.dirs.append(i)
 
-        print(self.dirs)
-        print(self.files)
-
     def run(self, mouse_position, events):
         for i in self.dirs:
             self.buttons.append(button.Button((200 )))

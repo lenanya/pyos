@@ -37,3 +37,9 @@
 22.2.24
 - minesweeper mines left und win condition
 - explorer angefangen, braucht noch icons
+
+28.2.24
+- terminal erstellt
+- eigene programmiersprache eingefuegt (noch nicht fertig)
+- explorer wird evtl doch nicht passieren
+- bugfixes

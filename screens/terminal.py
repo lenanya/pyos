@@ -1,6 +1,7 @@
 import pygame
 import os
 from utils import button
+from screens import pex
 
 # Farben
 RED = (255, 0, 0)
@@ -22,6 +23,9 @@ class Terminal:
         self.lines = ["./usr/files: "]
         self.curr_line = 0
         self.usr_input = ""
+        
+        self.pex_active = False
+        self.exit = False
 
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 
@@ -30,26 +34,43 @@ class Terminal:
         if terms_cmd[0] == "echo":
             self.lines[self.curr_line + 1] = cmd[4::]
             self.curr_line += 1
-        elif terms_cmd[0] == "cd":
-            if len(terms_cmd) > 1:
-                self.current_folder = self.current_folder + "/" + terms_cmd[1]
-            else: 
-                self.current_folder = "./usr/files"
+        elif terms_cmd[0] == "pex":
+            if terms_cmd[1] in os.listdir(self.current_folder):
+                self.pex = pex.Pex(terms_cmd[1])
+                self.pex_active = True
+        elif terms_cmd[0] == "pexexit":
+            self.pex_active = False
+            self.usr_input = ""
+            self.curr_line += 1
+            self.lines[self.curr_line] = f"{self.current_folder}: {self.usr_input}"
+        elif terms_cmd[0] == "cls":
+            self.lines = []
+            self.curr_line = 0
+            self.lines.append("")
+            self.lines.append("")
+            self.lines.append("")
+        elif terms_cmd[0] == "exit":
+            self.exit = True
         
     def run(self, mouse_position, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                self.lines.append("")
-                if event.key == pygame.K_BACKSPACE:
-                    self.usr_input = self.usr_input[0:-1]
-                elif event.key == pygame.K_RETURN:
-                    self.eval_cmd(self.usr_input)
-                    self.usr_input = ""
-                    self.curr_line += 1
-                else:
-                    curr_char = event.unicode
-                    self.usr_input += curr_char
-                self.lines[self.curr_line] = f"{self.current_folder}: {self.usr_input}"
+        if self.pex_active:
+            pex_output = self.pex.pex_run(mouse_position, events)
+            if pex_output != "":
+                self.eval_cmd(pex_output)
+        else:
+            for event in events:
+                if event.type == pygame.KEYDOWN:
+                    self.lines.append("")
+                    if event.key == pygame.K_BACKSPACE:
+                        self.usr_input = self.usr_input[0:-1]
+                    elif event.key == pygame.K_RETURN:
+                        self.eval_cmd(self.usr_input)
+                        self.usr_input = ""
+                        self.curr_line += 1
+                    else:
+                        curr_char = event.unicode
+                        self.usr_input += curr_char
+                    self.lines[self.curr_line] = f"{self.current_folder}: {self.usr_input}"
 
     def draw(self):
         pygame.draw.rect(self.screen, BLACK, (0, 100 * self.scale_vertical, 1920 * self.scale_horizontal, 980 * self.scale_vertical))
@@ -65,5 +86,5 @@ class Terminal:
 
 
     def click_check(self, event_pos):
-        if self.button_exit.is_pressed(event_pos):
+        if self.button_exit.is_pressed(event_pos) or self.exit == True:
             return "exit"
