@@ -29,6 +29,7 @@ class Terminal:
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 
     def eval_cmd(self, cmd):
+        self.lines.append("")
         terms_cmd = cmd.split(" ")
         if terms_cmd[0] == "echo":
             self.lines[self.curr_line + 1] = cmd[4::]
@@ -84,7 +85,14 @@ class Terminal:
 
     def click_check(self, event_pos):
         if self.button_exit.is_pressed(event_pos) :
+            self.pex_active = False
+            self.current_folder = "./usr/files"
+            self.lines = ["./usr/files: "]
+            self.curr_line = 0
+            self.usr_input = ""
             return "exit"
         
     # TODO: ADD MORE CMDS
     # TODO: FIX EXIT CMD
+    # TODO: ADD SCROLLING (OOPS)
+    # TODO: comment bruh

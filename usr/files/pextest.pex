@@ -14,7 +14,7 @@ if number == 14 {
 print yes
 }
 
-while number != 18 [
+while number != 500 [
 print number
 number += 1
 ]

@@ -225,7 +225,7 @@ while running:
                                             
                                     taskbar.taskbar_buttons_running_tasks.pop(a) # app aus liste von buttons entfernen
                                     
-                            current_screen = "desktop" # app geschlossen, also => desktop
+                        current_screen = "desktop" # app geschlossen, also => desktop
 
 
         events.append(event) # Alle events der Liste hinzufuegen
