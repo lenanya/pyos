@@ -49,6 +49,11 @@ class Terminal:
             self.lines.append("")
             self.lines.append("")
             self.lines.append("")
+        elif terms_cmd[0] == "marisetogaya":
+            self.lines[self.curr_line + 1] = "ITADAKI! SEIEKI <3"
+            with open("./settings/desktop_background.txt", "w") as f:
+                f.write("./assets/dontask.png")
+            self.curr_line += 1
         
     def run(self, mouse_position, events):
         if self.pex_active:

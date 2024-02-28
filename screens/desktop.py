@@ -18,7 +18,9 @@ class Desktop():
         self.font = font
         
         # hintergrund bild laden
-        self.background = pygame.transform.scale(pygame.image.load("./assets/desktop.png"), (round(1920 * scale_horizontal), round(980 * scale_vertical)))
+        with open("./settings/desktop_background.txt", "r") as f:
+            self.bg_image = f.read()
+        self.background = pygame.transform.scale(pygame.image.load(self.bg_image), (round(1920 * scale_horizontal), round(980 * scale_vertical)))
         # buttons fuer programme erstellen
         self.button_flappy = button.Button(10 * self.scale_horizontal, 110 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/flappy.png", "./assets/flappy_hover.png")
         self.button_minesweeper = button.Button(10 * self.scale_horizontal, 220 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/minesweeper.png", "./assets/minesweeper_hover.png")
@@ -51,6 +53,9 @@ class Desktop():
     # Funktion zum anzeigen des Fensters
     def draw(self):
         # hintergrundbild anzeigen
+        with open("./settings/desktop_background.txt", "r") as f:
+            self.bg_image = f.read()
+        self.background = pygame.transform.scale(pygame.image.load(self.bg_image), (round(1920 * self.scale_horizontal), round(980 * self.scale_vertical)))
         self.screen.blit(self.background, (0, 100 * self.scale_vertical))
         self.button_flappy.draw() # alle buttons anzeigen
         self.button_minesweeper.draw()

@@ -1,0 +1,6 @@
+num it = 0
+
+while it != 5 [
+print echo
+it += 1
+]
