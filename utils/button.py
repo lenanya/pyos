@@ -52,5 +52,5 @@ class Button():
         return self.hitbox.collidepoint(event_pos) # returnen ob event position
                                                    # mit dem knopf kollidiert
     
-# TODO: FIX TEXT ALIGNMENT LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO
+# TODO: FIX TEXT ALIGNMENT LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO LMAO
 # TODO: ADD TEXT ALIGNMENT SETTING 

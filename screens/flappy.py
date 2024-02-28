@@ -146,3 +146,5 @@ class FlappyBird():
 # TODO: ADD SPRITES (AAAAAAAAA)
 # TODO: ADD ANIMATION 
 # TODO: ADD SCALING DIFFICULTY (SPEED)
+# TODO: add start screen / end screen
+# TODO: autodefenestrate rn

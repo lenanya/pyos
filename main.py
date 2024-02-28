@@ -257,3 +257,5 @@ while running:
 # TODO: ADD TEXT EDITOR
 # TODO: ?ADD TETRIS
 # TODO: ?ADD HTML RENDERER
+# TODO: stop adding more todos
+# TODO: ignore above todo

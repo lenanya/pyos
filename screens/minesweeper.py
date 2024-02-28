@@ -269,3 +269,5 @@ class Minesweeper():
 # TODO: ADD DIFFICULTY 
 # TODO: ADD TIMER
 # TODO: ?ADD AUTO UNVEILING
+# TODO: add start screen 
+# TODO: add game over screen
