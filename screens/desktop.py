@@ -20,7 +20,8 @@ class Desktop():
         self.background = pygame.transform.scale(pygame.image.load("./assets/desktop.png"), (round(1920 * scale_horizontal), round(980 * scale_vertical)))
         self.button_flappy = button.Button(10 * self.scale_horizontal, 110 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/flappy.png", "./assets/flappy_hover.png")
         self.button_minesweeper = button.Button(10 * self.scale_horizontal, 220 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/minesweeper.png", "./assets/minesweeper_hover.png")
-        self.button_explorer = button.Button(10 * self.scale_horizontal, 330 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "expl", self.font)
+        self.button_explorer = button.Button(10 * self.scale_horizontal, 330 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/explorer.png", "./assets/explorer_hover.png")
+        self.button_terminal = button.Button(10 * self.scale_horizontal, 440 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/terminal.png", "./assets/terminal_hover.png")
 
     # Funktionen des Fensters
     def run(self, mouse_position, events):
@@ -33,6 +34,16 @@ class Desktop():
             self.button_minesweeper.sprite = self.button_minesweeper.image_on_hover
         else:
             self.button_minesweeper.sprite = self.button_minesweeper.image
+            
+        if self.button_explorer.is_hover(mouse_position):
+            self.button_explorer.sprite = self.button_explorer.image_on_hover
+        else:
+            self.button_explorer.sprite = self.button_explorer.image
+        
+        if self.button_terminal.is_hover(mouse_position):
+            self.button_terminal.sprite = self.button_terminal.image_on_hover
+        else:
+            self.button_terminal.sprite = self.button_terminal.image
     
     # Funktion zum anzeigen des Fensters
     def draw(self):
@@ -40,6 +51,7 @@ class Desktop():
         self.button_flappy.draw()
         self.button_minesweeper.draw()
         self.button_explorer.draw()
+        self.button_terminal.draw()
         
     def click_check(self, event_pos):
         if self.button_flappy.is_pressed(event_pos):
@@ -48,6 +60,8 @@ class Desktop():
             return "minesweeper"
         elif self.button_explorer.is_pressed(event_pos):
             return "explorer"
+        elif self.button_terminal.is_pressed(event_pos):
+            return "terminal"
         return "desktop"
     
 # TODO: ADD PROGRAM NAMES 

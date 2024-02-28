@@ -1,7 +1,7 @@
 # Imports
 import pygame
 from utils import button
-from screens import desktop, settings, flappy, minesweeper, explorer
+from screens import desktop, settings, flappy, minesweeper, explorer, terminal
 
 pygame.init()
 
@@ -45,6 +45,8 @@ screens["settings"] = settings.Settings(scale_horizontal, scale_vertical, screen
 screens["flappy"] = flappy.FlappyBird(scale_horizontal, scale_vertical, screen, font)
 screens["minesweeper"] = minesweeper.Minesweeper(scale_horizontal, scale_vertical, screen, font)
 screens["explorer"] = explorer.Explorer(scale_horizontal, scale_vertical, screen, font)
+screens["terminal"] = terminal.Terminal(scale_horizontal, scale_vertical, screen, font)
+
 
 # Variable zum wechseln von Fenstern
 current_screen = "desktop"
@@ -212,6 +214,21 @@ while running:
                                         taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
                                 taskbar.taskbar_buttons_running_tasks.pop(i)
                     current_screen = "desktop"
+
+            elif current_screen == "terminal":
+                if screens["terminal"].click_check(event.pos) == "exit":
+                    for i in range(len(taskbar.taskbar_buttons_running_tasks)):
+                        if i < len(taskbar.taskbar_running_tasks):
+                            if type(taskbar.taskbar_running_tasks[i]) == terminal.Terminal:
+                                taskbar.taskbar_running_tasks.pop(i)
+                                for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
+                                    if i + e < len(taskbar.taskbar_buttons_running_tasks):
+                                        taskbar.taskbar_buttons_running_tasks[i + e].x -= 105 * scale_horizontal
+                                        taskbar.taskbar_buttons_running_tasks[i + e].hitbox.x -= 105 * scale_horizontal
+                                taskbar.taskbar_buttons_running_tasks.pop(i)
+                    current_screen = "desktop"
+            
+
 
         # Alle events der Liste hinzufuegen
         events.append(event)
