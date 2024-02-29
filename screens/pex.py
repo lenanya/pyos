@@ -17,9 +17,6 @@ class Pex:
         self.lines = data.split("\n")
         self.terms = []
         for i in self.lines:
-            if i == "\n":
-                i = ""
-        for i in self.lines:
             self.terms.append(i.split(" "))
         # pointer und variablen sowie funktionen dict erstellen
         self.ptr = 0
@@ -29,7 +26,6 @@ class Pex:
             
     def pex_run(self, mouse_position, events):
         current = self.terms[self.ptr] # momentane zeile
-        print(current)
         
         if current[0] == "num": # pex ist static type also muss man den variablen typ angeben, num = float
             self.variables[current[1]] = float(current[3]) # wert in dict eingeben
@@ -43,6 +39,7 @@ class Pex:
             while self.terms[self.ptr][0] != "return":     # funktion beim einspeichern nicht ausfuehren
                 self.ptr += 1
             self.ptr += 1
+            
         elif current[0] == "if": # if 
             comp_var1 = current[1] # werte die verglichen werden sollen speichern
             comp_var2 = current[3]
@@ -52,9 +49,9 @@ class Pex:
             if comp_var2 in self.variables:
                 comp_var2 = self.variables[comp_var2]
                 
-            if type(comp_var1) == int or float: # falls zahl zu float convertieren
+            if str(comp_var1).isnumeric(): # falls zahl zu float convertieren
                 comp_var1 = float(comp_var1)
-            if type(comp_var2) == int or float:
+            if str(comp_var2).isnumeric():
                 comp_var2 = float(comp_var2)
                 
             if current[2] == "==": # operatoren ueberpruefen und condition
@@ -87,14 +84,18 @@ class Pex:
                 sec_val = self.variables[current[2]] 
             else:
                 sec_val = current[2] # variable 
-            if type(sec_val) == int or float:
+            if str(sec_val).isnumeric():
                 sec_val = float(sec_val)
 
             if current[1] == "=":
                 self.variables[current[0]] = sec_val # variable1 = variable2 (oder wert)
             elif current[1] == "+=":
+                if type(self.variables[current[0]]) != type(sec_val):
+                    return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
                 self.variables[current[0]] += sec_val # variable1 = variable1 + variable2 (oder wert)
             elif current[1] == "-=":
+                if type(self.variables[current[0]]) != float or type(sec_val) != float:
+                    return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
                 self.variables[current[0]] -= sec_val # variable1 = variable1 - variable2 (oder wert)
             self.ptr += 1
             
@@ -108,9 +109,9 @@ class Pex:
             if comp_var2 in self.variables:
                 comp_var2 = self.variables[comp_var2]
                 
-            if type(comp_var1) == int or float: # falls zahl zu float konvertieren
+            if str(comp_var1).isnumeric(): # falls zahl, zu float konvertieren
                 comp_var1 = float(comp_var1)
-            if type(comp_var2) == int or float:
+            if str(comp_var2).isnumeric():
                 comp_var2 = float(comp_var2)
                 
             if current[2] == "==": # operation fuer die kondition ueberpruefen
@@ -139,18 +140,27 @@ class Pex:
         elif current[0] == "return": # von funktion returnen
             self.ptr = self.functions[current[1]][1] # zeilenpointer auf vorher gespeicherten returnpunkt setzen
         
+        elif current[0] == "ereturn": # "early return" also vor funktionsende
+            self.ptr = self.functions[current[1]][1]
+            
+        elif current[0] == "input": # input erfragen
+            self.ptr += 1
+            return f"pinput {current[1]}"
+            
+        elif current[0] == "del": # variable loeschen
+            self.ptr += 1
+            self.variables.pop(current[1])
+        
         else:
             self.ptr += 1 # wenn zeile kein befehl, ignorieren
   
         if self.ptr < len(self.lines): 
             return "" 
         else:
-            return "pexexit" # wenn alle zeilen ausgefuehrt, schliessen
+            return "pexexit Programm beendet" # wenn alle zeilen ausgefuehrt, schliessen
         
     # TODO: ADD MORE KEYWORDS
     # TODO: ????GRAPHICAL MODE
-    # TODO: add function working (oops)
     # TODO: add other comperative ops
     # TODO: add more math ops
     # TODO: string concat?
-    # TODO: input

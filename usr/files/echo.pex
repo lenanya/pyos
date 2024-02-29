@@ -1,6 +1,32 @@
-num it = 0
+num num1 = 0
+str op = +
+num num2 = 0
+num exit = 0
 
-while it != 5 [
-print echo
-it += 1
+fn main
+print Write a number
+input num1
+if num1 == stop {
+exit = 1
+ereturn main
+}
+print Write an operator
+input op
+print Write another number
+input num2
+
+if op == + {
+num1 += num2
+}
+if op == - {
+num1 -= num2
+}
+
+print num1
+return main
+
+while exit != 1 [
+main
 ]
+
+end

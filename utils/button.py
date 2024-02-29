@@ -35,9 +35,10 @@ class Button():
     def draw(self):
         # render objekt fuer text erstellen
         text_to_draw = self.font.render(self.text, True, self.text_color)
+        text_rect = text_to_draw.get_rect(center=(self.x + self.width / 2, self.y + self.height / 2))
         if self.sprite == None: # falls kein bild vorhanden, rect mit farbe zeichnen + text
             pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
-            self.screen.blit(text_to_draw, (self.x, self.y))
+            self.screen.blit(text_to_draw, text_rect)
         if self.sprite != None: # falls bild vorhanden, dieses zeichnen / kein text!
             self.screen.blit(self.sprite, (self.x, self.y))
             
@@ -52,5 +53,3 @@ class Button():
         return self.hitbox.collidepoint(event_pos) # returnen ob event position
                                                    # mit dem knopf kollidiert
     
-# TODO: FIX TEXT ALIGNMENT
-# TODO: ADD TEXT ALIGNMENT SETTING 

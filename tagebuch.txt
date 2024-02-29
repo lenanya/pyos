@@ -51,3 +51,6 @@
 - taskleiste gebugfixed
 - pex funktionen funktionieren jetzt
 - terminal kommentiert
+- pex input hinzugefügt
+- pex fehlermeldungen begonnen
+- button text alignment gefixt

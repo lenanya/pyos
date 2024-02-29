@@ -38,8 +38,13 @@ scale_vertical = screen_height / 1080
 framerate = 60
 
 # Font
-font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical))) # auch auf hoehe skaliert
+if scale_vertical <= scale_horizontal:
+    font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical))) # auch auf hoehe skaliert
+else:
+    font = pygame.font.SysFont('Arial Black', int(round(32 * scale_horizontal)))
 
+font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical))) # TODO: remove, testing            
+                                    
 # Bildschirmflaeche erstellen
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 pygame.display.set_caption("PyOS")

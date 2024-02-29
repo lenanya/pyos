@@ -1,0 +1,4 @@
+num number = 4
+str blob = e
+
+print number
