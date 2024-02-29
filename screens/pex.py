@@ -29,6 +29,7 @@ class Pex:
             
     def pex_run(self, mouse_position, events):
         current = self.terms[self.ptr] # momentane zeile
+        print(current)
         
         if current[0] == "num": # pex ist static type also muss man den variablen typ angeben, num = float
             self.variables[current[1]] = float(current[3]) # wert in dict eingeben
@@ -39,6 +40,8 @@ class Pex:
         elif current[0] == "fn": # fn = funktion
             self.functions[current[1]] = [self.ptr + 1, 0] # startpunkt speichen, zweiter wert in der liste 
                                                            # ist um am ende der funktion zurueck zu kommen
+            while self.terms[self.ptr][0] != "return":     # funktion beim einspeichern nicht ausfuehren
+                self.ptr += 1
             self.ptr += 1
         elif current[0] == "if": # if 
             comp_var1 = current[1] # werte die verglichen werden sollen speichern
@@ -129,9 +132,16 @@ class Pex:
         elif current[0] == "]": # ende von while schleife, springt zu schleifenbeginn
             self.ptr = self.return_point 
             
+        elif current[0] in self.functions: # funktion ausfuehren
+            self.functions[current[0]][1] = self.ptr + 1 # returnpunkt in funktion speichern
+            self.ptr = self.functions[current[0]][0] # zeilenpointer auf start der funktion setzen
+            
+        elif current[0] == "return": # von funktion returnen
+            self.ptr = self.functions[current[1]][1] # zeilenpointer auf vorher gespeicherten returnpunkt setzen
+        
         else:
             self.ptr += 1 # wenn zeile kein befehl, ignorieren
-            
+  
         if self.ptr < len(self.lines): 
             return "" 
         else:

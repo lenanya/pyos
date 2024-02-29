@@ -1,5 +1,6 @@
 # Imports
 import pygame
+import sys
 from utils import button
 from screens import desktop, settings, flappy, minesweeper, explorer, terminal
 
@@ -202,38 +203,27 @@ while running:
             # ueberpruefen ob in dem momentan offenen fenster der button zum schliessen
             # gedrueckt wurde und falls dem so ist, dieses schliessen und aus den
             # listen der offenen apps entfernen
-            for i in screens.keys(): # TODO: fix bug where it doesnt close 
-                
-                if i == current_screen:
-                    
-                    for a in range(len(taskbar.taskbar_buttons_running_tasks)): # durch taskleiste iterieren
+            if screens[current_screen].click_check(event.pos) == "exit": # falls exit knopf gedrueckt
+                app_index = taskbar.taskbar_running_tasks.index(current_screen)
+                taskbar.taskbar_running_tasks.pop(app_index) # app aus liste entfernen
+                # andere apps und ihre buttons in der taskleiste nach vorne holen
+                for e in range(app_index, len(taskbar.taskbar_buttons_running_tasks)):
+                    if e < len(taskbar.taskbar_buttons_running_tasks): # falls app nicht die letzte
                         
-                        if screens[current_screen].click_check(event.pos) == "exit": # falls exit knopf gedrueckt
-                            
-                            if a <= len(taskbar.taskbar_running_tasks):
-                                
-                                if type(taskbar.taskbar_running_tasks[a]) == type(screens[i]):
-                                    taskbar.taskbar_running_tasks.pop(a) # app aus liste entfernen
-                                    # andere apps und ihre buttons in der taskleiste nach vorne holen
-                                    
-                                    for e in range(1, len(taskbar.taskbar_buttons_running_tasks)):
-                                        
-                                        if a + e < len(taskbar.taskbar_buttons_running_tasks): # falls app nicht die letzte
-                                            
-                                            taskbar.taskbar_buttons_running_tasks[a + e].x -= 105 * scale_horizontal # knopf vorziehen
-                                            taskbar.taskbar_buttons_running_tasks[a + e].hitbox.x -= 105 * scale_horizontal # hitbox vom knopf vorziehen
-                                            
-                                    taskbar.taskbar_buttons_running_tasks.pop(a) # app aus liste von buttons entfernen
-                                    
-                            current_screen = "desktop" # app geschlossen, also => desktop
+                        taskbar.taskbar_buttons_running_tasks[e].x -= 105 * scale_horizontal # knopf vorziehen
+                        taskbar.taskbar_buttons_running_tasks[e].hitbox.x -= 105 * scale_horizontal # hitbox vom knopf vorziehen
+                        
+                taskbar.taskbar_buttons_running_tasks.pop(app_index) # app aus liste von buttons entfernen
+                        
+                current_screen = "desktop" # app geschlossen, also => desktop
 
 
         events.append(event) # Alle events der Liste hinzufuegen
         
     current = screens[current_screen] # Variable die das momentane Fenster beinhaltet
     
-    if current not in taskbar.taskbar_running_tasks and current_screen != "desktop": # um keine app doppelt zu haben
-        taskbar.taskbar_running_tasks.append(current) # app der liste hinzufuegen
+    if current_screen not in taskbar.taskbar_running_tasks and current_screen != "desktop": # um keine app doppelt zu haben
+        taskbar.taskbar_running_tasks.append(current_screen) # app der liste hinzufuegen
         # knopf fuer die app in die liste hinzufuegen
         taskbar.taskbar_buttons_running_tasks.append(button.Button(105 * len(taskbar.taskbar_running_tasks) * scale_horizontal, 0 * scale_vertical, 100 * scale_horizontal, 100 * scale_vertical, BLUE, screen, current_screen, font, f"./assets/{current_screen}.png", f"./assets/{current_screen}_hover.png"))
 
@@ -248,6 +238,8 @@ while running:
     pygame.display.flip() # Bildschirm updaten
 
     clock.tick(framerate) # Framerate festlegen
+    
+sys.exit() # wenn hauptschleife beendet, programm schliessen
 
 # TODO: ADD TASKBAR RIGHT CLICK MENU
 # TODO: ADD TIME 

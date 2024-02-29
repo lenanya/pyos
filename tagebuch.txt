@@ -46,3 +46,8 @@
 - allen code kommentiert, vieles aufgeraeumt
 - weitere planung, durch todos
 - nervenzusammenbruch weil zu viele todos ups
+
+29.2.24
+- taskleiste gebugfixed
+- pex funktionen funktionieren jetzt
+- terminal kommentiert
