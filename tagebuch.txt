@@ -54,3 +54,6 @@
 - pex input hinzugefügt
 - pex fehlermeldungen begonnen
 - button text alignment gefixt
+
+1.3.24
+- text editor geadded

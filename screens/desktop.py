@@ -26,6 +26,7 @@ class Desktop():
         self.button_minesweeper = button.Button(10 * self.scale_horizontal, 220 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/minesweeper.png", "./assets/minesweeper_hover.png")
         self.button_explorer = button.Button(10 * self.scale_horizontal, 330 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/explorer.png", "./assets/explorer_hover.png")
         self.button_terminal = button.Button(10 * self.scale_horizontal, 440 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/terminal.png", "./assets/terminal_hover.png")
+        self.button_editor = button.Button(10 * self.scale_horizontal, 550 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/editor.png", "./assets/editor_hover.png")
 
     # Funktionen des Fensters
     def run(self, mouse_position, events):
@@ -49,6 +50,11 @@ class Desktop():
             self.button_terminal.sprite = self.button_terminal.image_on_hover
         else:
             self.button_terminal.sprite = self.button_terminal.image
+            
+        if self.button_editor.is_hover(mouse_position):
+            self.button_editor.sprite = self.button_editor.image_on_hover
+        else:
+            self.button_editor.sprite = self.button_editor.image
     
     # Funktion zum anzeigen des Fensters
     def draw(self):
@@ -61,6 +67,7 @@ class Desktop():
         self.button_minesweeper.draw()
         self.button_explorer.draw()
         self.button_terminal.draw()
+        self.button_editor.draw()
         
     def click_check(self, event_pos):
         if self.button_flappy.is_pressed(event_pos): # ueberpruefen ob buttons gedrueckt sind,
@@ -71,6 +78,8 @@ class Desktop():
             return "explorer"
         elif self.button_terminal.is_pressed(event_pos):
             return "terminal"
+        elif self.button_editor.is_pressed(event_pos):
+            return "editor"
         return "desktop"
     
 # TODO: ADD PROGRAM NAMES 

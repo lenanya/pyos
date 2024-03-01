@@ -1,0 +1,12 @@
+str name = none
+
+input name
+
+if name == jasper {
+print ur gay
+}
+if name != jasper {
+print hi
+}
+
+end

@@ -2,7 +2,7 @@
 import pygame
 import sys
 from utils import button
-from screens import desktop, settings, flappy, minesweeper, explorer, terminal
+from screens import desktop, settings, flappy, minesweeper, explorer, terminal, editor
 
 # pygame initialisieren
 pygame.init()
@@ -57,6 +57,7 @@ screens["flappy"] = flappy.FlappyBird(scale_horizontal, scale_vertical, screen, 
 screens["minesweeper"] = minesweeper.Minesweeper(scale_horizontal, scale_vertical, screen, font)
 screens["explorer"] = explorer.Explorer(scale_horizontal, scale_vertical, screen, font)
 screens["terminal"] = terminal.Terminal(scale_horizontal, scale_vertical, screen, font)
+screens["editor"] = editor.Editor(scale_horizontal, scale_vertical, screen, font)
 
 
 # Variable zum Wechseln von Fenstern
