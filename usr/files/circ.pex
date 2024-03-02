@@ -1,15 +1,16 @@
 num pi = 3.141592
 
-num rad = 0
+num radius = 0
 
-print enter radius
+input radius
 
-input rad
+num res = radius
 
-num res = rad
+res *= 2
 
 res *= pi
 
-print the result is 
+print the circumference is
 print res
+
 end
