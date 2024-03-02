@@ -1,5 +1,7 @@
 str name = none
 
+print enter ur name
+
 input name
 
 if name == jasper {
@@ -10,3 +12,4 @@ print hi
 }
 
 end
+

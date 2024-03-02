@@ -41,9 +41,7 @@ framerate = 60
 if scale_vertical <= scale_horizontal:
     font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical))) # auch auf hoehe skaliert
 else:
-    font = pygame.font.SysFont('Arial Black', int(round(32 * scale_horizontal)))
-
-font = pygame.font.SysFont('Arial Black', int(round(32 * scale_vertical))) # TODO: remove, testing            
+    font = pygame.font.SysFont('Arial Black', int(round(32 * scale_horizontal)))           
                                     
 # Bildschirmflaeche erstellen
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
@@ -74,7 +72,7 @@ class Taskbar():
         with open("./settings/taskbarcolor.txt", "r") as f: # datei im lesemodus oeffnen
             read_color = f.read() # farbe auslesen
         self.taskbar_color = colors[read_color] # hier kommt das dictionary von vorhin zu gebrauch
-        
+        31
         # Home Menue mit knoepfen erstellen, hitbox ist um
         # das menue auszublenden wenn ausserhalb von dem menu gedrueckt wird
         self.home_hitbox = pygame.Rect((0,0, 400 * scale_horizontal, 605 * scale_vertical))
@@ -251,7 +249,6 @@ sys.exit() # wenn hauptschleife beendet, programm schliessen
 # TODO: ADD TIME 
 # TODO: ?ADD PINNING TO TASKBAR
 # TODO: ?SHOW WIFI 
-# TODO: ADD FILE MANAGER
-# TODO: ADD TEXT EDITOR
+# TODO: ?ADD FILE MANAGER
 # TODO: ?ADD TETRIS
 # TODO: ?ADD HTML RENDERER

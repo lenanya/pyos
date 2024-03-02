@@ -32,6 +32,8 @@ class Terminal:
         self.pex_input = ""
         self.pex_input_variable = ""
 
+        self.text_color = WHITE
+        
         # exit button
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
 
@@ -51,7 +53,7 @@ class Terminal:
             else:
                 self.lines[self.curr_line + 1] = "File not found"
                 self.curr_line += 1
-        elif terms_cmd[0] == "pexexit": # wird von pex gesendet
+        elif terms_cmd[0] == "pexexit": # wird von pex gesendet wenn das programm beendet wird oder einen fehler hat
             self.pex_active = False
             self.pex_input_active = False
             self.pex_input = ""
@@ -66,12 +68,22 @@ class Terminal:
             self.lines.append("")
             self.lines.append("")
             self.lines.append("")
-        elif terms_cmd[0] == "pinput":
+        elif terms_cmd[0] == "pinput": # fuer pex um input zu erhalten
             self.pex_input_active = True
             self.pex_input = ""
             self.pex_input_variable = terms_cmd[1]
             self.curr_line += 1
             self.lines[self.curr_line] = "to pex: "
+        elif terms_cmd[0] == "color": # text farbe aendern mit 3 zahlen von 0 - 255
+            valid_color = True
+            for i in terms_cmd[1:4]: # sichergehen dass es zahlen sind
+                if not i.isnumeric():
+                    valid_color = False
+                    break
+                if not 0 <= int(i) <= 255:
+                    valid_color = False
+                    break
+            self.text_color = [int(i) for i in terms_cmd[1:4]]
         
     def run(self, mouse_position, events):
         if self.pex_active: # falls pex aktiv
@@ -80,6 +92,8 @@ class Terminal:
                     pex_output = self.pex.pex_run(mouse_position, events) # output von pex erhalten
                 except IndexError:
                     pex_output ="pexexit Programm hat kein \'end\'"
+                except Exception: # falls ein fehler von pex ausgeht
+                    pex_output = "pexexit Fehler"
                 if pex_output != "": # wenn pex etwas returnt
                     self.eval_cmd(pex_output) # als befehl evaluieren
                 
@@ -127,7 +141,7 @@ class Terminal:
         
         for i in lines: # durch zeilen iterieren
             txt = i 
-            txt_render.append(self.font.render(txt, 1, WHITE)) # fuer jede zeile text render objekt erstellen
+            txt_render.append(self.font.render(txt, 1, self.text_color)) # fuer jede zeile text render objekt erstellen
         
         # nur so viele zeilen wie auf den bildschirm passen
         amount_to_draw = round((970 * self.scale_vertical) / (40 * self.scale_vertical)) - 1 
@@ -148,5 +162,4 @@ class Terminal:
             self.usr_input = ""
             return "exit"
         
-    # TODO: ADD MORE CMDS
     # TODO: tree cmd

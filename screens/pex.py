@@ -28,7 +28,17 @@ class Pex:
         current = self.terms[self.ptr] # momentane zeile
         
         if current[0] == "num": # pex ist static type also muss man den variablen typ angeben, num = float
-            self.variables[current[1]] = float(current[3]) # wert in dict eingeben
+            assign_val = current[3]
+            
+            if assign_val in self.variables: # falls wert variable
+                assign_val = self.variables[assign_val]
+            
+            try: # zu float konvertieren
+                assign_val = float(assign_val)
+            except Exception: # falls keine zahl
+                return f"pexexit Nicht-Zahl als num deklariert (Zeile {self.ptr + 1})" # programm mit fehler beenden
+            
+            self.variables[current[1]] = assign_val # wert in dict eingeben
             self.ptr += 1 # zeilenpointer erhoehen
         elif current[0] == "str": # str = string
             self.variables[current[1]] = current[3] 
@@ -97,6 +107,14 @@ class Pex:
                 if type(self.variables[current[0]]) != float or type(sec_val) != float:
                     return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
                 self.variables[current[0]] -= sec_val # variable1 = variable1 - variable2 (oder wert)
+            elif current[1] == "*=":
+                if type(self.variables[current[0]]) != float or type(sec_val) != float:
+                    return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
+                self.variables[current[0]] *= sec_val
+            elif current[1] == "/=":
+                if type(self.variables[current[0]]) != float or type(sec_val) != float:
+                    return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
+                self.variables[current[0]] /= sec_val
             self.ptr += 1
             
         elif current[0] == "while": # while schleife
@@ -162,5 +180,3 @@ class Pex:
     # TODO: ADD MORE KEYWORDS
     # TODO: ????GRAPHICAL MODE
     # TODO: add other comperative ops
-    # TODO: add more math ops
-    # TODO: string concat?

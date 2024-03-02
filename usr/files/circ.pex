@@ -1,0 +1,15 @@
+num pi = 3.141592
+
+num rad = 0
+
+print enter radius
+
+input rad
+
+num res = rad
+
+res *= pi
+
+print the result is 
+print res
+end
