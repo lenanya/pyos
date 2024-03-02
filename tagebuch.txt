@@ -57,3 +57,16 @@
 
 1.3.24
 - text editor geadded
+
+2.3.24
+- pex mathematische operatoren hinzugefuegt
+- editor zeigt jetzt zeilen an 
+- editor speichern zeigt jetzt einen _ als cursor an
+- editor open menu vergroessert
+- pex fehler crashen nicht mehr das ganze os
+- terminal hat jetzt color befehl (nimmt 3 zahlen)
+
+3.3.24
+- editor kommentiert
+- terminal fertigkommentiert
+- weitere pex tests

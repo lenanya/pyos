@@ -54,7 +54,7 @@ class Terminal:
                 self.lines[self.curr_line + 1] = "File not found"
                 self.curr_line += 1
         elif terms_cmd[0] == "pexexit": # wird von pex gesendet wenn das programm beendet wird oder einen fehler hat
-            self.pex_active = False
+            self.pex_active = False # pex beenden und zuruecksetzen
             self.pex_input_active = False
             self.pex_input = ""
             self.usr_input = ""
