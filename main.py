@@ -72,7 +72,7 @@ class Taskbar():
         with open("./settings/taskbarcolor.txt", "r") as f: # datei im lesemodus oeffnen
             read_color = f.read() # farbe auslesen
         self.taskbar_color = colors[read_color] # hier kommt das dictionary von vorhin zu gebrauch
-        31
+        
         # Home Menue mit knoepfen erstellen, hitbox ist um
         # das menue auszublenden wenn ausserhalb von dem menu gedrueckt wird
         self.home_hitbox = pygame.Rect((0,0, 400 * scale_horizontal, 605 * scale_vertical))
