@@ -62,8 +62,6 @@ class Desktop():
     # Funktion zum anzeigen des Fensters
     def draw(self):
         # hintergrundbild anzeigen
-        with open("./settings/desktop_background.txt", "r") as f:
-            self.bg_image = f.read()
         self.background = pygame.transform.scale(pygame.image.load(self.bg_image), (round(1920 * self.scale_horizontal), round(980 * self.scale_vertical)))
         self.screen.blit(self.background, (0, 100 * self.scale_vertical))
         self.button_flappy.draw() # alle buttons anzeigen
