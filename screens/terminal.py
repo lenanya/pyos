@@ -75,15 +75,16 @@ class Terminal:
             self.curr_line += 1
             self.lines[self.curr_line] = "to pex: "
         elif terms_cmd[0] == "color": # text farbe aendern mit 3 zahlen von 0 - 255
-            valid_color = True
             for i in terms_cmd[1:4]: # sichergehen dass es zahlen sind
+                valid_color = True
                 if not i.isnumeric():
                     valid_color = False
                     break
                 if not 0 <= int(i) <= 255:
                     valid_color = False
                     break
-            self.text_color = [int(i) for i in terms_cmd[1:4]]
+            if valid_color:
+                self.text_color = [int(i) for i in terms_cmd[1:4]]
         
     def run(self, mouse_position, events):
         if self.pex_active: # falls pex aktiv
