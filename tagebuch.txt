@@ -90,3 +90,4 @@
 - editor buttons highlighten jetzt
 - terminal tree command geadded
 - < > <= >= %= **= zu pex hinzugefuegt
+- big productive wooo
