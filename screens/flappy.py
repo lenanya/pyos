@@ -48,6 +48,7 @@ class Pipe():
 		self.screen = screen
 		self.scale_horizontal = scale_horizontal
 		self.scale_vertical = scale_vertical
+		self.speed = 10 * self.scale_horizontal
 		
 	def draw(self):
         # roehren anzeigen
@@ -55,12 +56,12 @@ class Pipe():
 		pygame.draw.rect(self.screen, GREEN, (self.x, self.gap_y + self.gap_size, 150 * self.scale_horizontal, 10000))
 		
 	def move(self):
-		self.x -= 10 * self.scale_horizontal # roehren nach links bewegen
+		self.x -= self.speed # roehren nach links bewegen
         # wenn roehren vom bildschirm weg sind, position zuruecksetzen
         # und luecke zufaellig neu generieren
 		if self.x + 150 * self.scale_horizontal <= 0:
 			self.x = 1920 * self.scale_horizontal
-			self.gap_y = randint(round(250 * self.scale_vertical), round(500 * self.scale_vertical))
+			self.gap_y = randint(round(150 * self.scale_vertical), round(500 * self.scale_vertical))
 			return True # um score vom player zu erhoehen
 		return False
 		
@@ -107,6 +108,8 @@ class FlappyBird():
                    
                if self.pipe.move(): # falls roehren am spieler vorbei sind
                    self.player_score += 1 # score erhoehen
+                   if self.player_score % 5 == 0:
+                       self.pipe.speed += 5 * self.scale_horizontal
                
                if self.pipe.check_collision(self.player.y): # falls spieler roehren beruehrt
                    # alles zuruecksetzen
@@ -115,6 +118,7 @@ class FlappyBird():
                    self.player.speed = 0
                    self.pipe.x = 1920 * self.scale_horizontal
                    self.pipe.gap_y  = 300 * self.scale_vertical
+                   self.pipe.speed = 10 * self.scale_horizontal
                    
     
     def draw(self):
@@ -143,8 +147,4 @@ class FlappyBird():
             return "exit"
         
 
-# TODO: ADD SCORE
-# TODO: ADD SPRITES (AAAAAAAAA)
-# TODO: ADD ANIMATION 
-# TODO: ADD SCALING DIFFICULTY (SPEED)
 # TODO: add start screen / end screen

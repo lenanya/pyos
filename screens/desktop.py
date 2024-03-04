@@ -1,5 +1,6 @@
 import pygame
 from utils import button
+import time
 
 # Farben
 RED = (255, 0, 0)
@@ -28,6 +29,8 @@ class Desktop():
         self.button_terminal = button.Button(10 * self.scale_horizontal, 440 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/terminal.png", "./assets/terminal_hover.png")
         self.button_editor = button.Button(10 * self.scale_horizontal, 550 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/editor.png", "./assets/editor_hover.png")
 
+        
+        
     # Funktionen des Fensters
     def run(self, mouse_position, events):
         # falls maus auf knopf => zu hover sprite wechseln
@@ -84,6 +87,4 @@ class Desktop():
     
 # TODO: ADD PROGRAM NAMES 
 # TODO: ADD RIGHT CLICK MENU
-# TODO: UPDATE WALLPAPER
-# TODO: ALLOW FOR FILES ON DESKTOP
-# TODO: ?ADD DRAGGING
+# TODO: fix lag

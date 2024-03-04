@@ -2,6 +2,7 @@ import pygame
 import os
 from utils import button
 from screens import pex
+import time
 
 # Farben
 RED = (255, 0, 0)
@@ -114,7 +115,7 @@ class Terminal:
                         else:
                             curr_char = event.unicode # gedrueckte taste zu input hinzufuegen
                             self.pex_input += curr_char
-                        if self.pex_input_active:    
+                        if self.pex_input_active:   
                             self.lines[self.curr_line] = f"to pex: {self.pex_input}_"
                         
         else: # falls pex nicht aktiv
@@ -142,7 +143,7 @@ class Terminal:
         
         for i in range(len(lines)): # durch zeilen iterieren
             txt = lines[i] # zeilenzahl + text
-            if i == self.curr_line: # falls die zeile die momentan editierte ist
+            if i == self.curr_line and time.time() % 1 > 0.5: # falls die zeile die momentan editierte ist
                 txt += "_" # "cursor" ans ende hinzufuegen
             txt_render.append(self.font.render(txt, 1, WHITE)) # text zur liste hinzufuegen
         # nur so viele zeilen wie auf den bildschirm passen
@@ -165,3 +166,4 @@ class Terminal:
             return "exit"
         
     # TODO: tree cmd
+    # TODO: help cmd

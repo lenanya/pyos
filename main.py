@@ -247,8 +247,4 @@ sys.exit() # wenn hauptschleife beendet, programm schliessen
 
 # TODO: ADD TASKBAR RIGHT CLICK MENU
 # TODO: ADD TIME 
-# TODO: ?ADD PINNING TO TASKBAR
-# TODO: ?SHOW WIFI 
-# TODO: ?ADD FILE MANAGER
-# TODO: ?ADD TETRIS
-# TODO: ?ADD HTML RENDERER
+

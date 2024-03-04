@@ -1,0 +1,29 @@
+num pi = 3.141592
+num running = 1
+
+fn main
+num rad = 0
+
+print Enter a radius or type exit
+
+input rad
+
+if rad == exit {
+running = 0
+ereturn main
+}
+
+num d = rad
+d *= 2
+num res = d
+res *= pi
+
+print The circumference is
+print res
+return main
+
+while running == 1 [
+main
+]
+
+end

@@ -264,10 +264,6 @@ class Minesweeper():
             return "exit"
         
 
-# TODO: ADD FLAG SPRITE
-# TODO: FIX TEXT ALIGNMENT (BUTTONS!!!)
 # TODO: ADD DIFFICULTY 
-# TODO: ADD TIMER
-# TODO: ?ADD AUTO UNVEILING
 # TODO: add start screen 
 # TODO: add game over screen

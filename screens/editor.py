@@ -1,6 +1,7 @@
 import pygame
 import os
 from utils import button
+import time
 
 # Farben
 RED = (255, 0, 0)
@@ -65,7 +66,7 @@ class Editor:
                             self.curr_line -= 1 # eine zeile nach oben gehen
                     elif event.key == pygame.K_DOWN: # pfeiltaste nach unten
                         # falls zeile nicht die letzte und nicht die einzige
-                        if self.curr_line < len(self.lines[self.lines_shown[0]:self.lines_shown[1]]) and len(self.lines[self.lines_shown[0]:self.lines_shown[1]]) != 1:
+                        if self.curr_line < len(self.lines) and len(self.lines) != 1:
                             self.curr_line += 1 # eine zeile nach unten gehen
                     else: # fuer jede andere taste
                         curr_char = event.unicode # taste zu unicode konvertieren und als curr_char speichern
@@ -99,8 +100,9 @@ class Editor:
         if len(self.lines) != 0: # falls zeilen vorhanden 
             txt_render = [] # liste fuer text render objekte
             for i in range(len(self.lines)): # durch zeilen iterieren
-                txt = f"{self.lines_shown[0] + i}: " + self.lines[i] # zeilenzahl + text
-                if i == self.curr_line: # falls die zeile die momentan editierte ist
+                txt = f"{i}: " + self.lines[i] # zeilenzahl + text
+                print(txt)
+                if i == self.curr_line and time.time() % 1 > 0.5 and not self.save_file: # falls die zeile die momentan editierte ist
                     txt += "_" # "cursor" ans ende hinzufuegen
                 txt_render.append(self.font.render(txt, 1, WHITE)) # text zur liste hinzufuegen
                 
@@ -123,7 +125,10 @@ class Editor:
             # hintergrund vom menue
             pygame.draw.rect(self.screen, GREY, (205 * self.scale_horizontal, 100 * self.scale_vertical, 200 * self.scale_horizontal, 50 * self.scale_vertical))
             # eingabefeld fuer dateiname anzeigen mit momentanem namen und cursor
-            self.screen.blit(self.font.render(self.current_file + "_", 1, WHITE), (205 * self.scale_horizontal, 105 * self.scale_vertical))
+            txt = self.current_file
+            if time.time() % 1 > 0.5:
+                txt += "_"
+            self.screen.blit(self.font.render(txt, 1, WHITE), (205 * self.scale_horizontal, 105 * self.scale_vertical))
         
         self.button_exit.draw() # exit button anzeigen
         
@@ -143,6 +148,7 @@ class Editor:
                 self.open_file_hitbox = pygame.Rect(0, 100 * self.scale_vertical, 200 * self.scale_horizontal, 60 * (len(self.open_buttons) + 1) * self.scale_vertical)
         if not self.save_file and not self.open_file: # falls beide menues geschlossen sind
             if self.button_save.is_pressed(event_pos): # falls save button gedrueckt wird
+                self.curr_line = 0
                 self.save_file = True # save auf true setzen
         
         else: # falls eins von den menues offen ist

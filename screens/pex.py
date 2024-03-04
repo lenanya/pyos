@@ -358,6 +358,6 @@ class Pex:
             return "pexexit Programm beendet" # wenn alle zeilen ausgefuehrt, schliessen
         
     # TODO: ADD MORE KEYWORDS
-    # TODO: ????GRAPHICAL MODE
-    # TODO: add other comperative ops
+    # TODO: add other comperative ops < > >= <= 
+    # TODO: add % (modulo)
     # TODO: write pex docs
