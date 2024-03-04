@@ -82,3 +82,8 @@
 - cursor im terminal hinzugefuegt
 - pex fertig kommentiert
 - terminal fertig kommentiert
+- bugfixes:
+  - editor zeilenanzahl war falsch
+- flappy bird speed increase geadded
+- todos geupdated
+- editor und terminal cursor blinkt jetzt
