@@ -91,3 +91,7 @@
 - terminal tree command geadded
 - < > <= >= %= **= zu pex hinzugefuegt
 - big productive wooo
+
+5.3.24
+- angefangen pex in externes programm zu packen
+  - in go, ueber sockets zum kommunizieren
