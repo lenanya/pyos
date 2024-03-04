@@ -22,6 +22,7 @@ class Pex:
         self.ptr = 0
         self.variables = {}
         self.functions = {}
+        self.lists = {}
         self.return_point = 0
             
     def pex_run(self, mouse_position, events):
@@ -168,6 +169,48 @@ class Pex:
         elif current[0] == "del": # variable loeschen
             self.ptr += 1
             self.variables.pop(current[1])
+            
+        elif current[0] == "list":
+          name = current[1]
+          values = []
+          for i in current[2::]:
+            try:
+              values.append(float(i))
+            except Exception:
+              values.append(i)
+              
+          self.lists[name] = values
+          self.ptr += 1
+          
+        elif current[0].endswith(")"):
+          name = current[0][::current[0].find("(")]
+          index = float(current[0][current[0].find("(") + 1 : current[0].find(")")])
+          
+          value = current[2]
+          
+          try:
+            value = float(value)
+          except Exception:
+            pass 
+          
+          self.lists[name][1][index] = value
+          self.ptr += 1
+          
+        elif current[0] == "append":
+          name = current[1]
+          if name not in self.lists:
+            self.ptr += 1
+            return ""
+            
+          value = current[3]
+          
+          try:
+            value = float(value)
+          except Exception:
+            pass 
+          
+          self.lists[name][1].append(value)
+          self.ptr += 1
         
         else:
             self.ptr += 1 # wenn zeile kein befehl, ignorieren

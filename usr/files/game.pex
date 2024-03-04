@@ -1,0 +1,8 @@
+list row0 = # # # #
+list row1 = # # # #
+list row2 = # # # #
+list row3 = # # # #
+num playerx = 0
+num playery = 0
+num goalx = 3
+num goaly = 3
