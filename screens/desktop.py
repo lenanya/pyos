@@ -85,6 +85,4 @@ class Desktop():
             return "editor"
         return "desktop"
     
-# TODO: ADD PROGRAM NAMES 
-# TODO: ADD RIGHT CLICK MENU
 # TODO: fix lag

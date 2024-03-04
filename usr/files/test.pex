@@ -1,0 +1,8 @@
+num iter = 0
+
+while iter <= 5 [
+print iter
+iter += 1
+]
+
+end

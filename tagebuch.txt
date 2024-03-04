@@ -87,3 +87,6 @@
 - flappy bird speed increase geadded
 - todos geupdated
 - editor und terminal cursor blinkt jetzt
+- editor buttons highlighten jetzt
+- terminal tree command geadded
+- < > <= >= %= **= zu pex hinzugefuegt

@@ -128,6 +128,46 @@ class Pex:
                     while self.terms[self.ptr][0] != "}":
                         self.ptr += 1
                     self.ptr += 1
+            elif current[2] == ">":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit > verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 > comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "}":
+                            self.ptr += 1
+                        self.ptr += 1
+            elif current[2] == "<":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit < verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 < comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "}":
+                            self.ptr += 1
+                        self.ptr += 1
+            elif current[2] == "<=":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit <= verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 <= comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "}":
+                            self.ptr += 1
+                        self.ptr += 1
+            elif current[2] == ">=":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit >= verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 >= comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "}":
+                            self.ptr += 1
+                        self.ptr += 1
             else:
                 return f"pexexit Kein valider if operator \'{current[2]}\' (Zeile {self.ptr + 1})"
             
@@ -195,6 +235,14 @@ class Pex:
                 if type(self.variables[current[0]]) != float or type(sec_val) != float:
                     return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
                 self.variables[current[0]] /= sec_val
+            elif current[1] == "%=":
+                if type(self.variables[current[0]]) != float or type(sec_val) != float:
+                    return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
+                self.variables[current[0]] %= sec_val
+            elif current[1] == "**=":
+                if type(self.variables[current[0]]) != float or type(sec_val) != float:
+                    return f"pexexit Inkompatibler Datentyp (Zeile {self.ptr + 1})"
+                self.variables[current[0]] **= sec_val
             self.ptr += 1
             
         elif current[0] == "while": # while schleife
@@ -259,6 +307,47 @@ class Pex:
                         self.ptr += 1
                     self.ptr += 1
                     self.return_point.pop(len(self.return_point) - 1)
+                    
+            elif current[2] == ">":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit > verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 > comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "]":
+                            self.ptr += 1
+                        self.ptr += 1
+            elif current[2] == "<":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit < verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 < comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "]":
+                            self.ptr += 1
+                        self.ptr += 1
+            elif current[2] == "<=":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit <= verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 <= comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "]":
+                            self.ptr += 1
+                        self.ptr += 1
+            elif current[2] == ">=":
+                if type(comp_var1) != float or type(comp_var2) != float:
+                    return f"pexexit String kann nicht mit >= verwendet werden (Zeile {self.ptr + 1})"
+                else:
+                    if comp_var1 >= comp_var2:
+                        self.ptr += 1
+                    else:
+                        while self.terms[self.ptr][0] != "]":
+                            self.ptr += 1
+                        self.ptr += 1
                     
         elif current[0] == "]": # ende von while schleife, springt zu schleifenbeginn
             self.ptr = self.return_point[len(self.return_point) - 1]
@@ -357,7 +446,4 @@ class Pex:
         else:
             return "pexexit Programm beendet" # wenn alle zeilen ausgefuehrt, schliessen
         
-    # TODO: ADD MORE KEYWORDS
-    # TODO: add other comperative ops < > >= <= 
-    # TODO: add % (modulo)
     # TODO: write pex docs

@@ -264,6 +264,5 @@ class Minesweeper():
             return "exit"
         
 
-# TODO: ADD DIFFICULTY 
 # TODO: add start screen 
 # TODO: add game over screen

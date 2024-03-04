@@ -86,6 +86,11 @@ class Terminal:
                     break
             if valid_color:
                 self.text_color = [int(i) for i in terms_cmd[1:4]]
+        elif terms_cmd[0] == "tree": # dateien anzeigen
+            files_list = [i for i in os.listdir(self.current_folder)] # liste von dateien erstellen
+            for i in files_list: # durch liste iterieren
+                self.lines[self.curr_line + 1] = ">   " + i # datei anzeigen
+                self.curr_line += 1 # neue zeile
         
     def run(self, mouse_position, events):
         if self.pex_active: # falls pex aktiv
@@ -165,5 +170,4 @@ class Terminal:
             self.usr_input = ""
             return "exit"
         
-    # TODO: tree cmd
     # TODO: help cmd

@@ -245,6 +245,3 @@ while running:
     
 sys.exit() # wenn hauptschleife beendet, programm schliessen
 
-# TODO: ADD TASKBAR RIGHT CLICK MENU
-# TODO: ADD TIME 
-

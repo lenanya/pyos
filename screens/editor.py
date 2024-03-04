@@ -49,7 +49,24 @@ class Editor:
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
         
     def run(self, mouse_position, events):
+        if self.open_file:
+            for i in self.open_buttons:
+                if i.is_hover(mouse_position):
+                    i.color = TEAL
+                else:
+                    i.color = GREY
         if not self.save_file: # falls das save menu nicht geoeffnet ist
+            
+            if self.button_open.is_hover(mouse_position):
+                self.button_open.color = TEAL
+            else:
+                self.button_open.color = GREY
+                
+            if self.button_save.is_hover(mouse_position):
+                self.button_save.color = TEAL
+            else:
+                self.button_save.color = GREY
+            
             for event in events:
                 if event.type == pygame.KEYDOWN: # input manager
                     if event.key == pygame.K_BACKSPACE: # falls backspace
