@@ -29,10 +29,10 @@ class Terminal:
         
         self.pex_active = False # variable ob pex aktiv
         self.pex_input_active = False # variable ob pex programm input verlangt
-        self.pex_input = ""
-        self.pex_input_variable = ""
+        self.pex_input = "" # variable fuer pex input
+        self.pex_input_variable = "" # pex variable in die der input gespeichert wird
 
-        self.text_color = WHITE
+        self.text_color = WHITE # variable fuer text farbe
         
         # exit button
         self.button_exit = button.Button((1920 * self.scale_horizontal - 55 * self.scale_horizontal), 100 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical, RED, self.screen, "X", self.font)
@@ -41,17 +41,17 @@ class Terminal:
         self.lines.append("")
         terms_cmd = cmd.split(" ") # befehl in teile aufteilen
         if terms_cmd[0] == "echo": # ausgabe
-            self.lines[self.curr_line + 1] = cmd[5::]
+            self.lines[self.curr_line + 1] = cmd[5::] # alles nach 'echo ' ausgeben
             self.curr_line += 1
         elif terms_cmd[0] == "pex": # programm ausfuehren
-            if len(terms_cmd) < 2:
-                self.lines[self.curr_line + 1] = "No file provided"
+            if len(terms_cmd) < 2: # falls keine Datei angegeben
+                self.lines[self.curr_line + 1] = "Keine Datei angegeben"
                 self.curr_line += 1
-            elif terms_cmd[1] in os.listdir(self.current_folder):
-                self.pex = pex.Pex(terms_cmd[1])
-                self.pex_active = True
-            else:
-                self.lines[self.curr_line + 1] = "File not found"
+            elif terms_cmd[1] in os.listdir(self.current_folder): # falls datei vorhanden
+                self.pex = pex.Pex(terms_cmd[1]) # pex klasse mit dieser datei initialisieren
+                self.pex_active = True # pex auf aktiv setzen
+            else: # falls datei nicht vorhanden
+                self.lines[self.curr_line + 1] = "Datei nicht vorhanden"
                 self.curr_line += 1
         elif terms_cmd[0] == "pexexit": # wird von pex gesendet wenn das programm beendet wird oder einen fehler hat
             self.pex_active = False # pex beenden und zuruecksetzen
@@ -73,14 +73,14 @@ class Terminal:
             self.pex_input = ""
             self.pex_input_variable = terms_cmd[1]
             self.curr_line += 1
-            self.lines[self.curr_line] = "to pex: "
+            self.lines[self.curr_line] = "to pex: _"
         elif terms_cmd[0] == "color": # text farbe aendern mit 3 zahlen von 0 - 255
             for i in terms_cmd[1:4]: # sichergehen dass es zahlen sind
                 valid_color = True
                 if not i.isnumeric():
                     valid_color = False
                     break
-                if not 0 <= int(i) <= 255:
+                if not 0 <= int(i) <= 255: # sichergehen, dass die zahlen zwischen 0 und 255 sind
                     valid_color = False
                     break
             if valid_color:
@@ -115,7 +115,7 @@ class Terminal:
                             curr_char = event.unicode # gedrueckte taste zu input hinzufuegen
                             self.pex_input += curr_char
                         if self.pex_input_active:    
-                            self.lines[self.curr_line] = f"to pex: {self.pex_input}"
+                            self.lines[self.curr_line] = f"to pex: {self.pex_input}_"
                         
         else: # falls pex nicht aktiv
             for event in events:
@@ -140,10 +140,11 @@ class Terminal:
         txt_render = [] # liste von text render objekten
         lines = [i for i in self.lines if i] # platzhalter zeilen entfernen
         
-        for i in lines: # durch zeilen iterieren
-            txt = i 
-            txt_render.append(self.font.render(txt, 1, self.text_color)) # fuer jede zeile text render objekt erstellen
-        
+        for i in range(len(lines)): # durch zeilen iterieren
+            txt = lines[i] # zeilenzahl + text
+            if i == self.curr_line: # falls die zeile die momentan editierte ist
+                txt += "_" # "cursor" ans ende hinzufuegen
+            txt_render.append(self.font.render(txt, 1, WHITE)) # text zur liste hinzufuegen
         # nur so viele zeilen wie auf den bildschirm passen
         amount_to_draw = round((970 * self.scale_vertical) / (40 * self.scale_vertical)) - 1 
        

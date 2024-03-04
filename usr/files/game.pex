@@ -1,8 +1,134 @@
-list row0 = # # # #
+list row0 = O # # #
 list row1 = # # # #
 list row2 = # # # #
-list row3 = # # # #
+list row3 = # # # X
 num playerx = 0
 num playery = 0
 num goalx = 3
 num goaly = 3
+str r0st = ####
+str r1st = ####
+str r2st = ####
+str r3st = ####
+num running = 1
+num playerongoaly = 0
+num score = 0
+
+fn draw
+num row = 1
+r0st = row0(0)
+r1st = row1(0)
+r2st = row2(0)
+r3st = row3(0)
+while row != 4 [
+r0st += row0(row)
+r1st += row1(row)
+r2st += row2(row)
+r3st += row3(row)
+row += 1
+]
+print score:
+print score
+print r0st
+print r1st
+print r2st
+print r3st
+
+return draw
+
+fn moveleft
+if playerx != 0 {
+playerx -= 1
+}
+return moveleft
+
+fn moveright
+if playerx != 3 {
+playerx += 1
+}
+return moveright
+
+fn moveup
+if playery != 0 {
+playery -= 1
+}
+return moveup
+
+fn movedown
+if playery != 3 {
+playery += 1
+}
+return movedown
+
+fn checkpos
+if playerx == goalx {
+score += 1
+random newx 0 3
+random newy 0 3
+goalx = newx
+goaly = newy
+}
+return checkpos
+
+fn getkey
+str key = n
+input key
+if key == a {
+moveleft
+}
+if key == d {
+moveright
+}
+if key == w {
+moveup
+}
+if key == s {
+movedown
+}
+if key == exit {
+running = 0
+}
+
+list row0 = # # # #
+list row1 = # # # #
+list row2 = # # # #
+list row3 = # # # #
+if playery == 0 {
+row0(playerx) = O
+}
+if playery == 1 {
+row1(playerx) = O
+}
+if playery == 2 {
+row2(playerx) = O
+}
+if playery == 3 {
+row3(playerx) = O
+}
+
+if playery == goaly {
+checkpos
+}
+
+if goaly == 0 {
+row0(goalx) = X
+}
+if goaly == 1 {
+row1(goalx) = X
+}
+if goaly == 2 {
+row2(goalx) = X
+}
+if goaly == 3 {
+row3(goalx) = X
+}
+return getkey
+
+draw
+while running == 1 [
+getkey
+clear
+draw
+]
+
+end

@@ -70,3 +70,15 @@
 - editor kommentiert
 - terminal fertigkommentiert
 - weitere pex tests
+
+4.3.24
+- listen zu pex hinzugefuegt
+- viele pex bugfixes 
+  - nested while loops returnen nicht richtig
+  - listen 
+- clear command in pex hinzugefuegt
+- random command in pex hinzugefuegt
+- beispielspiel in pex programmiert
+- cursor im terminal hinzugefuegt
+- pex fertig kommentiert
+- terminal fertig kommentiert
