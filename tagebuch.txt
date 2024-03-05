@@ -98,3 +98,4 @@
 
 - doch nicht, aber standalone
 - 500 zeilen *pain*
+- pex standalone fertig 

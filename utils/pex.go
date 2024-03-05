@@ -35,17 +35,17 @@ func checkIfVarOrList(term string) (interface{}, rune) {
 	}
 	if strings.HasSuffix(term, ")") {
 		var index int64
+		var float float64
 		value, _ := checkIfVarOrList(term[strings.Index(term, "(")+1 : len(term)-1])
 		index = int64(value.(float64))
-		valueType := reflect.ValueOf(lists[term[:strings.Index(term, "(")]][index]).Kind()
-		switch reflect.ValueOf(valueType).Kind() {
-		case reflect.Float64:
-			valueFloat := lists[term[:strings.Index(term, "(")]][index].(float64)
-			return valueFloat, 'n'
-		case reflect.String:
-			valueString := lists[term[:strings.Index(term, "(")]][index].(string)
-			return valueString, 's'
+		valueAtIndex := lists[term[:strings.Index(term, "(")]][index]
+		valueType := reflect.TypeOf(valueAtIndex)
+		if valueType == reflect.TypeOf(float) {
+			return valueAtIndex, 'n'
+		} else {
+			return valueAtIndex, 's'
 		}
+
 	}
 	value, err := strconv.ParseFloat(term, 64)
 	if err != nil {
@@ -71,35 +71,32 @@ func execute() {
 	}
 
 	var currentTerm []string
-	var isInVarNums string
-	var isInVarStrings string
-	var isInFuncs string
-	var isInLists string
 	for pointer < len(terms) {
+		var isInVarNums string = "none"
+		var isInVarStrings string = "none"
+		var isInFuncs string = "none"
+		var isInLists string = "none"
 		currentTerm = terms[pointer]
-		fmt.Println(currentTerm)
+
 		_, okF := funcs[currentTerm[0]]
-		if okF {
-			isInFuncs = currentTerm[0]
+		_, okN := varNums[currentTerm[0]]
+		_, okS := varStrings[currentTerm[0]]
+		listIndex := strings.Index(currentTerm[0], "(")
+		var okL bool = false
+		if listIndex != -1 {
+			_, okL1 := lists[currentTerm[0][0:strings.Index(currentTerm[0], "(")]]
+			if okL1 {
+				okL = true
+			}
 		}
-		if len(currentTerm) >= 1 {
-			_, okN := varNums[currentTerm[0]]
-			_, okS := varStrings[currentTerm[0]]
-			listIndex := strings.Index(currentTerm[0], "(")
-			var okL bool = false
-			if listIndex != -1 {
-				_, okL1 := lists[currentTerm[0][0:strings.Index(currentTerm[0], "(")]]
-				if okL1 {
-					okL = true
-				}
-			}
-			if okN {
-				isInVarNums = currentTerm[0]
-			} else if okS {
-				isInVarStrings = currentTerm[0]
-			} else if okL {
-				isInLists = currentTerm[0]
-			}
+		if okN {
+			isInVarNums = currentTerm[0]
+		} else if okS {
+			isInVarStrings = currentTerm[0]
+		} else if okF {
+			isInFuncs = currentTerm[0]
+		} else if okL {
+			isInLists = currentTerm[0]
 		}
 		switch currentTerm[0] {
 		case "num":
@@ -403,12 +400,12 @@ func execute() {
 			pointer = funcs[currentTerm[1]][1]
 
 		case "input":
-			fmt.Println("e")
+
 			_, okN := varNums[currentTerm[1]]
 			_, okS := varStrings[currentTerm[1]]
 			if okN {
 				var input string
-				fmt.Scanln("%s", input)
+				fmt.Scanf("%s\n", &input)
 				value, err := strconv.ParseFloat(input, 64)
 				if err != nil {
 					panic("Inkompatibler Datentyp")
@@ -417,7 +414,7 @@ func execute() {
 				pointer++
 			} else if okS {
 				var input string
-				fmt.Scanln("%s", input)
+				fmt.Scanf("%s\n", &input)
 				value := input
 				varStrings[currentTerm[1]] = value
 				pointer++
@@ -448,16 +445,13 @@ func execute() {
 		case "random":
 			value1, valueType := checkIfVarOrList(currentTerm[2])
 			value2, value2Type := checkIfVarOrList(currentTerm[3])
-			_, ok := varNums[currentTerm[1]]
-			if !ok {
-				panic("Variable ist keine Zahl oder existiert nicht")
-			}
 			if valueType != 'n' || value2Type != 'n' {
 				panic("Keine Zahl bei random angegeben")
 			} else {
 				valueRange := value2.(float64) - value1.(float64)
 				newValue := rand.Int64N(int64(valueRange)) + int64(value1.(float64))
 				varNums[currentTerm[1]] = float64(newValue)
+				pointer++
 			}
 		default:
 			pointer++
