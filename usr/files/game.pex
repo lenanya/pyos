@@ -127,7 +127,6 @@ return getkey
 draw
 while running == 1 [
 getkey
-clear
 draw
 ]
 

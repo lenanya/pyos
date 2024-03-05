@@ -95,3 +95,6 @@
 5.3.24
 - angefangen pex in externes programm zu packen
   - in go, ueber sockets zum kommunizieren
+
+- doch nicht, aber standalone
+- 500 zeilen *pain*

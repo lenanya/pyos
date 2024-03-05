@@ -1,9 +1,10 @@
-num blob = 12
-blob += 3
-print blob
+num blob = 0
 
-str blab = hi
-blab += iii
-print blab
+while blob <= 5 [
+print blob
+blob += 1
+]
+
+clear
 
 end
