@@ -64,8 +64,11 @@ fn checkpos
 if playerx == goalx {
 score += 1
 random newx 0 3
+random newy 0 3
 goalx = newx
-goaly = newx
+goaly = newy
+print goalx
+print goaly
 }
 return checkpos
 
@@ -126,7 +129,6 @@ return getkey
 draw
 while running == 1 [
 getkey
-clear
 draw
 ]
 
