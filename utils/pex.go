@@ -89,13 +89,14 @@ func execute() {
 				okL = true
 			}
 		}
-		if okN {
+		switch {
+		case okN:
 			isInVarNums = currentTerm[0]
-		} else if okS {
+		case okS:
 			isInVarStrings = currentTerm[0]
-		} else if okF {
+		case okF:
 			isInFuncs = currentTerm[0]
-		} else if okL {
+		case okL:
 			isInLists = currentTerm[0]
 		}
 		switch currentTerm[0] {
