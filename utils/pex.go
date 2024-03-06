@@ -89,6 +89,7 @@ func execute() {
 				okL = true
 			}
 		}
+
 		switch {
 		case okN:
 			isInVarNums = currentTerm[0]
@@ -99,6 +100,7 @@ func execute() {
 		case okL:
 			isInLists = currentTerm[0]
 		}
+
 		switch currentTerm[0] {
 		case "num":
 			value, valueType := checkIfVarOrList(currentTerm[3])
