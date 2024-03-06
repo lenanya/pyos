@@ -158,14 +158,13 @@ func execute() {
 
 			switch currentTerm[2] {
 			case "==":
-				if value1 == value2 {
-					pointer++
-				} else {
+				if value1 != value2 {
 					for terms[pointer][0] != "}" {
 						pointer++
 					}
-					pointer++
 				}
+				pointer++
+
 			case "!=":
 				if value1 == value2 {
 					for terms[pointer][0] != "}" {
@@ -219,7 +218,6 @@ func execute() {
 				}
 			default:
 				panic("Invalider Operator")
-
 			}
 
 		case isInVarNums:
@@ -260,7 +258,6 @@ func execute() {
 				default:
 					panic("Invalider Operator")
 				}
-				pointer++
 			}
 			pointer++
 
@@ -283,7 +280,6 @@ func execute() {
 				default:
 					panic("Invalider Operator")
 				}
-				pointer++
 			}
 			pointer++
 
@@ -324,8 +320,8 @@ func execute() {
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
 					pointer++
-
 				}
+
 			case ">=":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic(">= ist nicht kompatibel mit String")
@@ -337,8 +333,8 @@ func execute() {
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
 					pointer++
-
 				}
+
 			case ">":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("> ist nicht kompatibel mit String")
@@ -350,8 +346,8 @@ func execute() {
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
 					pointer++
-
 				}
+
 			case "<":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("< ist nicht kompatibel mit String")
@@ -363,11 +359,12 @@ func execute() {
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
 					pointer++
-
 				}
+
 			default:
 				panic("Invalider Operator")
 			}
+
 		case "]":
 			pointer = returnPositions[len(returnPositions)-1]
 
@@ -413,8 +410,9 @@ func execute() {
 			} else {
 				indexInt := int64(value.(float64))
 				lists[currentTerm[0][0:strings.Index(currentTerm[0], "(")]][indexInt] = value2
-				pointer++
 			}
+			pointer++
+
 		case "append":
 			value, _ := checkIfVarOrList(currentTerm[2])
 			lists[currentTerm[1]] = append(lists[currentTerm[1]], value)
@@ -433,8 +431,9 @@ func execute() {
 				valueRange := value2.(float64) - value1.(float64)
 				newValue := rand.Int64N(int64(valueRange)) + int64(value1.(float64))
 				varNums[currentTerm[1]] = float64(newValue)
-				pointer++
 			}
+			pointer++
+
 		default:
 			pointer++
 		}
