@@ -40,11 +40,11 @@ func checkIfVarOrList(term string) (interface{}, rune) {
 		index = int64(value.(float64))
 		valueAtIndex := lists[term[:strings.Index(term, "(")]][index]
 		valueType := reflect.TypeOf(valueAtIndex)
-		if valueType == reflect.TypeOf(float) {
-			return valueAtIndex, 'n'
-		} else {
+		if valueType != reflect.TypeOf(float) {
 			return valueAtIndex, 's'
 		}
+
+		return valueAtIndex, 'n'
 
 	}
 	value, err := strconv.ParseFloat(term, 64)
@@ -120,10 +120,10 @@ func execute() {
 			var values []interface{}
 			for _, v := range currentTerm[3:] {
 				value, err := strconv.ParseFloat(v, 64)
-				if err != nil {
-					values = append(values, v)
-				} else {
+				if err == nil {
 					values = append(values, value)
+				} else {
+					values = append(values, v)
 				}
 
 			}
@@ -165,65 +165,55 @@ func execute() {
 					pointer++
 				}
 			case "!=":
-				if value1 != value2 {
-					pointer++
-				} else {
+				if value1 == value2 {
 					for terms[pointer][0] != "}" {
 						pointer++
 					}
-					pointer++
 				}
+				pointer++
 			case "<=":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("<= ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) <= value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) > value2.(float64) {
 						for terms[pointer][0] != "}" {
 							pointer++
 						}
-						pointer++
 					}
+					pointer++
 				}
 			case ">=":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic(">= ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) >= value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) < value2.(float64) {
 						for terms[pointer][0] != "}" {
 							pointer++
 						}
-						pointer++
 					}
+					pointer++
 				}
 			case ">":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("> ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) > value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) <= value2.(float64) {
 						for terms[pointer][0] != "}" {
 							pointer++
 						}
-						pointer++
 					}
+					pointer++
 				}
 			case "<":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("< ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) < value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) >= value2.(float64) {
 						for terms[pointer][0] != "}" {
 							pointer++
 						}
-						pointer++
 					}
+					pointer++
 				}
 			default:
 				panic("Invalider Operator")
@@ -233,72 +223,67 @@ func execute() {
 		case isInVarNums:
 			if len(currentTerm) > 1 {
 				value, valueType := checkIfVarOrList(currentTerm[2])
-				pointer++
 
 				switch currentTerm[1] {
 				case "=":
-					if valueType == 'n' {
-						varNums[currentTerm[0]] = value.(float64)
-						pointer++
-					} else {
+					if valueType != 'n' {
 						panic("Num Variable kann nicht mit String belegt werden")
+					} else {
+						varNums[currentTerm[0]] = value.(float64)
 					}
 				case "+=":
-					if valueType == 'n' {
-						varNums[currentTerm[0]] += value.(float64)
-					} else {
+					if valueType != 'n' {
 						panic("Num Variable kann nicht mit String addiert werden")
+					} else {
+						varNums[currentTerm[0]] += value.(float64)
 					}
 				case "-=":
-					if valueType == 'n' {
-						varNums[currentTerm[0]] -= value.(float64)
-					} else {
+					if valueType != 'n' {
 						panic("Num Variable kann nicht mit String subtrahiert werden")
+					} else {
+						varNums[currentTerm[0]] -= value.(float64)
 					}
 				case "*=":
-					if valueType == 'n' {
-						varNums[currentTerm[0]] *= value.(float64)
-					} else {
+					if valueType != 'n' {
 						panic("Num Variable kann nicht mit String multipliziert werden")
+					} else {
+						varNums[currentTerm[0]] *= value.(float64)
 					}
 				case "/=":
-					if valueType == 'n' {
-						varNums[currentTerm[0]] /= value.(float64)
-						pointer++
-					} else {
+					if valueType != 'n' {
 						panic("Num Variable kann nicht mit String dividiert werden")
+					} else {
+						varNums[currentTerm[0]] /= value.(float64)
 					}
 				default:
 					panic("Invalider Operator")
 				}
-			} else {
 				pointer++
 			}
+			pointer++
 
 		case isInVarStrings:
 			if len(currentTerm) > 1 {
 				value, valueType := checkIfVarOrList(currentTerm[2])
 				switch currentTerm[1] {
 				case "=":
-					if valueType == 's' {
-						varStrings[currentTerm[0]] = value.(string)
-						pointer++
-					} else {
+					if valueType != 's' {
 						panic("String kann nicht mit Num gleichgesetzt werden")
+					} else {
+						varStrings[currentTerm[0]] = value.(string)
 					}
 				case "+=":
-					if valueType == 's' {
-						varStrings[currentTerm[0]] += value.(string)
-						pointer++
-					} else {
+					if valueType != 's' {
 						panic("String kann nicht mit Num gleichgesetzt werden")
+					} else {
+						varStrings[currentTerm[0]] += value.(string)
 					}
 				default:
 					panic("Invalider Operator")
 				}
-			} else {
 				pointer++
 			}
+			pointer++
 
 		case "while":
 			value1, value1Type := checkIfVarOrList(currentTerm[1])
@@ -309,80 +294,74 @@ func execute() {
 
 			switch currentTerm[2] {
 			case "==":
-				if value1 == value2 {
-					pointer++
-				} else {
-					for terms[pointer][0] != "]" {
-						pointer++
-					}
-					pointer++
-					returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
-				}
-			case "!=":
 				if value1 != value2 {
-					pointer++
-				} else {
 					for terms[pointer][0] != "]" {
 						pointer++
 					}
-					pointer++
 					returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 				}
+				pointer++
+
+			case "!=":
+				if value1 == value2 {
+					for terms[pointer][0] != "]" {
+						pointer++
+					}
+					returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
+				}
+				pointer++
+
 			case "<=":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("<= ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) <= value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) > value2.(float64) {
 						for terms[pointer][0] != "]" {
 							pointer++
 						}
-						pointer++
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
+					pointer++
+
 				}
 			case ">=":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic(">= ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) >= value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) < value2.(float64) {
 						for terms[pointer][0] != "]" {
 							pointer++
 						}
-						pointer++
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
+					pointer++
+
 				}
 			case ">":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("> ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) > value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) <= value2.(float64) {
 						for terms[pointer][0] != "]" {
 							pointer++
 						}
-						pointer++
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
+					pointer++
+
 				}
 			case "<":
 				if value1Type != 'n' || value2Type != 'n' {
 					panic("< ist nicht kompatibel mit String")
 				} else {
-					if value1.(float64) < value2.(float64) {
-						pointer++
-					} else {
+					if value1.(float64) >= value2.(float64) {
 						for terms[pointer][0] != "]" {
 							pointer++
 						}
-						pointer++
 						returnPositions = deleteElement(returnPositions, len(returnPositions)-1)
 					}
+					pointer++
+
 				}
 			default:
 				panic("Invalider Operator")
@@ -412,16 +391,16 @@ func execute() {
 					panic("Inkompatibler Datentyp")
 				}
 				varNums[currentTerm[1]] = value
-				pointer++
 			} else if okS {
 				var input string
 				fmt.Scanf("%s\n", &input)
 				value := input
 				varStrings[currentTerm[1]] = value
-				pointer++
 			} else {
 				panic("Variable nicht vorhanden")
 			}
+			pointer++
+
 		case isInLists:
 			var index string
 			index = currentTerm[0][strings.Index(currentTerm[0], "(")+1 : strings.Index(currentTerm[0], ")")]
