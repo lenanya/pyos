@@ -67,8 +67,6 @@ random newx 0 3
 random newy 0 3
 goalx = newx
 goaly = newy
-print goalx
-print goaly
 }
 return checkpos
 

@@ -99,3 +99,6 @@
 - doch nicht, aber standalone
 - 500 zeilen *pain*
 - pex standalone fertig 
+
+6.3.24
+- formatieren in pex.go
