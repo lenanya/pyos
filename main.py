@@ -2,7 +2,7 @@
 import pygame
 import sys
 from utils import button
-from screens import desktop, settings, flappy, minesweeper, explorer, terminal, editor
+from screens import desktop, settings, flappy, minesweeper, terminal, editor
 
 # pygame initialisieren
 pygame.init()
