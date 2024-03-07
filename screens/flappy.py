@@ -129,9 +129,10 @@ class FlappyBird():
         self.button_exit.draw() # exit button anzeigen
         if not self.game_over: # falls spiel aktiv
             # score text anzeigen
-            self.screen.blit(self.font.render(f"Score: {self.player_score}", 1, WHITE), (50 * self.scale_horizontal, 200 * self.scale_vertical))
             self.player.draw() # spieler und roehren anzeigen
             self.pipe.draw()
+            self.screen.blit(self.font.render(f"Score: {self.player_score}", 1, WHITE), (50 * self.scale_horizontal, 200 * self.scale_vertical))
+
         else: # falls spiel nicht aktiv
             # statischen spieler anzeigen
             pygame.draw.rect(self.screen, YELLOW, (200 * self.scale_horizontal, 415 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical))

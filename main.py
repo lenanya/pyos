@@ -53,7 +53,6 @@ screens["desktop"] = desktop.Desktop(scale_horizontal, scale_vertical, screen, f
 screens["settings"] = settings.Settings(scale_horizontal, scale_vertical, screen, font)
 screens["flappy"] = flappy.FlappyBird(scale_horizontal, scale_vertical, screen, font)
 screens["minesweeper"] = minesweeper.Minesweeper(scale_horizontal, scale_vertical, screen, font)
-screens["explorer"] = explorer.Explorer(scale_horizontal, scale_vertical, screen, font)
 screens["terminal"] = terminal.Terminal(scale_horizontal, scale_vertical, screen, font)
 screens["editor"] = editor.Editor(scale_horizontal, scale_vertical, screen, font)
 

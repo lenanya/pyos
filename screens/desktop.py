@@ -25,9 +25,8 @@ class Desktop():
         # buttons fuer programme erstellen
         self.button_flappy = button.Button(10 * self.scale_horizontal, 110 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/flappy.png", "./assets/flappy_hover.png")
         self.button_minesweeper = button.Button(10 * self.scale_horizontal, 220 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/minesweeper.png", "./assets/minesweeper_hover.png")
-        self.button_explorer = button.Button(10 * self.scale_horizontal, 330 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/explorer.png", "./assets/explorer_hover.png")
-        self.button_terminal = button.Button(10 * self.scale_horizontal, 440 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/terminal.png", "./assets/terminal_hover.png")
-        self.button_editor = button.Button(10 * self.scale_horizontal, 550 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/editor.png", "./assets/editor_hover.png")
+        self.button_terminal = button.Button(10 * self.scale_horizontal, 330 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/terminal.png", "./assets/terminal_hover.png")
+        self.button_editor = button.Button(10 * self.scale_horizontal, 440 * self.scale_vertical, 100 * self.scale_horizontal, 100 * self.scale_vertical, BLUE, self.screen, "", self.font, "./assets/editor.png", "./assets/editor_hover.png")
 
         
         
@@ -43,11 +42,6 @@ class Desktop():
             self.button_minesweeper.sprite = self.button_minesweeper.image_on_hover
         else:
             self.button_minesweeper.sprite = self.button_minesweeper.image
-            
-        if self.button_explorer.is_hover(mouse_position):
-            self.button_explorer.sprite = self.button_explorer.image_on_hover
-        else:
-            self.button_explorer.sprite = self.button_explorer.image
         
         if self.button_terminal.is_hover(mouse_position):
             self.button_terminal.sprite = self.button_terminal.image_on_hover
@@ -66,7 +60,6 @@ class Desktop():
         self.screen.blit(self.background, (0, 100 * self.scale_vertical))
         self.button_flappy.draw() # alle buttons anzeigen
         self.button_minesweeper.draw()
-        self.button_explorer.draw()
         self.button_terminal.draw()
         self.button_editor.draw()
         
@@ -75,8 +68,6 @@ class Desktop():
             return "flappy"                          # wenn ja, name des programms returnen
         elif self.button_minesweeper.is_pressed(event_pos):
             return "minesweeper"
-        elif self.button_explorer.is_pressed(event_pos):
-            return "explorer"
         elif self.button_terminal.is_pressed(event_pos):
             return "terminal"
         elif self.button_editor.is_pressed(event_pos):
@@ -84,3 +75,4 @@ class Desktop():
         return "desktop"
     
 # TODO: fix lag
+# TODO: add icons for term and ed

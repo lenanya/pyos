@@ -105,3 +105,5 @@
 
 7.3.24
 - flappy bird zeigt jetzt score im game over menue an
+- flappy bird score jetzt ueber pipe
+- explorer entfernt
