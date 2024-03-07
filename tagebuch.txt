@@ -102,3 +102,6 @@
 
 6.3.24
 - formatieren in pex.go
+
+7.3.24
+- flappy bird zeigt jetzt score im game over menue an
