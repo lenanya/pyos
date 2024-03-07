@@ -95,6 +95,7 @@ class FlappyBird():
                         if not self.game_over: # falls spiel aktiv player springen lassen
                             self.player.jump()
                         else:
+                            self.player_score = 0
                             self.game_over = False # sonst spiel starten
 							
            if not self.game_over: # falls spiel aktiv
@@ -128,15 +129,15 @@ class FlappyBird():
         self.button_exit.draw() # exit button anzeigen
         if not self.game_over: # falls spiel aktiv
             # score text anzeigen
-            self.screen.blit(self.font.render(f"Score: {self.player_score}", 1, WHITE), (50 * self.scale_horizontal, 200 * self.scale_horizontal))
+            self.screen.blit(self.font.render(f"Score: {self.player_score}", 1, WHITE), (50 * self.scale_horizontal, 200 * self.scale_vertical))
             self.player.draw() # spieler und roehren anzeigen
             self.pipe.draw()
         else: # falls spiel nicht aktiv
-            self.player_score = 0 # score zuruecksetzen
             # statischen spieler anzeigen
             pygame.draw.rect(self.screen, YELLOW, (200 * self.scale_horizontal, 415 * self.scale_vertical, 50 * self.scale_horizontal, 50 * self.scale_vertical))
             # start text anzeigen
             self.screen.blit(self.font.render("Anklicken zum Starten", 1, WHITE), (800 * self.scale_horizontal, 450 * self.scale_vertical))
+            self.screen.blit(self.font.render(f"Score: {self.player_score}", 1, WHITE), (50 * self.scale_horizontal, 200 * self.scale_vertical))
         
 			
     def click_check(self, event_pos):
@@ -145,6 +146,3 @@ class FlappyBird():
             # spiel zuruecksetzen und schliessen
             self.game_over = True 
             return "exit"
-        
-
-# TODO: add start screen / end screen

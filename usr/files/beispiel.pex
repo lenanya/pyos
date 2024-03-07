@@ -1,0 +1,5 @@
+num nummer = 5
+nummer += 10
+print nummer
+
+end

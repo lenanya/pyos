@@ -1,10 +1,34 @@
-num blob = 0
+num pi = 3.1415
+num radius = 0
+num running = 1
 
-while blob <= 5 [
-print blob
-blob += 1
+fn main
+print Gib einen Radius oder exit ein
+input radius
+if radius == exit {
+running = 0
+ereturn main
+}
+
+num diameter = radius
+diameter *= 2
+
+num result = diameter
+result *= pi
+
+print Der Umfang betraegt:
+print result
+
+result = radius
+result **= 2
+result *= pi
+
+print Der Flaecheninhalt betraegt:
+print result
+return main
+
+while running == 1 [
+main
 ]
-
-clear
 
 end
