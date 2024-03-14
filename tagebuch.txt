@@ -107,3 +107,6 @@
 - flappy bird zeigt jetzt score im game over menue an
 - flappy bird score jetzt ueber pipe
 - explorer entfernt
+
+14.3.24
+- syntax highlighting im editor

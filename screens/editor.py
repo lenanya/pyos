@@ -11,6 +11,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREY = (145, 145, 145)
 TEAL = (0, 145, 255)
+YELLOW = (255, 255, 0)
+ORANGE = (255, 165, 0)
 
 class Editor:
     def __init__(self, scale_horizontal, scale_vertical, screen, font):
@@ -109,7 +111,32 @@ class Editor:
                     else: # fuer alle anderen tasten
                         curr_char = event.unicode # taste zu unicode konvertieren
                         self.current_file += curr_char # gedrueckte taste zu dateinamen hinzufuegen
-                    
+    
+    def render_text(self, text, base_x, y):
+        # keywords definieren
+        keywords = {"if": TEAL, "while": TEAL, "num": BLUE, "str": BLUE, "list": BLUE, "fn": RED, "return": RED, "ereturn": RED, "[": YELLOW, "]": YELLOW, "{": YELLOW, "}": YELLOW, "print": ORANGE, "input": ORANGE, "clear": ORANGE, "append": ORANGE}
+        
+        x = base_x
+        
+        # durch woerter iterieren
+        for word in text.split():
+            # farbe anpassen
+            if word.replace("_", "") in keywords:
+                color = keywords.get(word.replace("_", ""))
+            elif word.replace(".", "").replace("_", "").isnumeric():
+                color = GREEN
+            else:
+                color = WHITE
+
+            # render objekt erstellen
+            rendered_text = self.font.render(word, True, color)
+
+            # render objekt anzeigen
+            self.screen.blit(rendered_text, (x, y))
+
+            # x koordinate fuer das naechste wort erhoehen
+            x += rendered_text.get_width() + 5
+            
     def draw(self):
         # hintergrund
         pygame.draw.rect(self.screen, BLACK, (0, 100 * self.scale_vertical, 1920 * self.scale_horizontal, 980 * self.scale_vertical))
@@ -121,12 +148,12 @@ class Editor:
                 print(txt)
                 if i == self.curr_line and time.time() % 1 > 0.5 and not self.save_file: # falls die zeile die momentan editierte ist
                     txt += "_" # "cursor" ans ende hinzufuegen
-                txt_render.append(self.font.render(txt, 1, WHITE)) # text zur liste hinzufuegen
+                txt_render.append(txt) # text zur liste hinzufuegen
                 
             txt_render = txt_render[self.lines_shown[0]:self.lines_shown[1] + 1] # text render liste an angezeigte zeilen anpassen
              
             for i in range(len(txt_render)): # durch liste iterieren und anzeigen
-                self.screen.blit(txt_render[i], (15 * self.scale_horizontal, 160 * self.scale_vertical + 40 * i * self.scale_vertical))
+                self.render_text(txt_render[i], 15 * self.scale_horizontal, 160 * self.scale_vertical + 40 * i * self.scale_vertical)
                 
                 
         if not self.open_file: # falls das oeffnen menue geschlossen ist
