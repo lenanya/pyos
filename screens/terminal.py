@@ -171,3 +171,4 @@ class Terminal:
             return "exit"
         
     # TODO: help cmd
+    # TODO: fix color
