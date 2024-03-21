@@ -145,7 +145,6 @@ class Editor:
             txt_render = [] # liste fuer text render objekte
             for i in range(len(self.lines)): # durch zeilen iterieren
                 txt = f"{i}: " + self.lines[i] # zeilenzahl + text
-                print(txt)
                 if i == self.curr_line and time.time() % 1 > 0.5 and not self.save_file: # falls die zeile die momentan editierte ist
                     txt += "_" # "cursor" ans ende hinzufuegen
                 txt_render.append(txt) # text zur liste hinzufuegen
@@ -214,6 +213,7 @@ class Editor:
                         # angezeigte zeilen anpassen
                         self.lines_shown[0] = 0
                         self.lines_shown[1] = amount_to_draw
+                        self.open_file = False
                 if self.open_buttons[-1].is_pressed(event_pos): # falls "neue datei" button gedrueckt ist
                     self.lines = [""] # zeilen leeren
                     # menge die zu zeichnen ist anpassen
